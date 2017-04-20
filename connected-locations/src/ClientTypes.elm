@@ -34,9 +34,21 @@ type alias Components =
     Dict String Component
 
 
+type Direction
+    = North
+    | South
+    | East
+    | West
+
+
+type alias Exits =
+    List ( Direction, String )
+
+
 type Component
     = Display { name : String, description : String }
     | Style String
+    | ConnectedLocations Exits
 
 
 type alias Entity =

@@ -14,6 +14,11 @@ addStyle selector components =
     Dict.insert "style" (Style selector) components
 
 
+addDirections : List ( Direction, String ) -> Components -> Components
+addDirections exits components =
+    Dict.insert "connectedLocations" (ConnectedLocations exits) components
+
+
 item : String -> String -> Entity
 item name description =
     { id = name
@@ -21,10 +26,13 @@ item name description =
     }
 
 
-location : String -> String -> Entity
-location name description =
+location : String -> String -> List ( Direction, String ) -> Entity
+location name description exits =
     { id = name
-    , components = display name description |> addStyle name
+    , components =
+        display name description
+            |> addStyle name
+            |> addDirections exits
     }
 
 
@@ -53,8 +61,8 @@ characters =
 
 locations : List Entity
 locations =
-    [ location "Cottage" "The cottage where Little Red Ridding Hood and her mother live."
-    , location "River" "A river that runs by Little Red Ridding Hood's cottage."
-    , location "Woods" "The forests that surround Little Red Ridding Hood's cottage."
-    , location "Grandma's house" "The cabin in the woods where Grandma lives alone."
+    [ location "Cottage" "The cottage where Little Red Ridding Hood and her mother live." [ ( East, "River" ) ]
+    , location "River" "A river that runs by Little Red Ridding Hood's cottage." [ ( West, "Cottage" ), ( East, "Woods" ) ]
+    , location "Woods" "The forests that surround Little Red Ridding Hood's cottage." [ ( West, "River" ), ( East, "Grandma's house" ) ]
+    , location "Grandma's house" "The cabin in the woods where Grandma lives alone." []
     ]

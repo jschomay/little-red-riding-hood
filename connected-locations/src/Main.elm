@@ -202,19 +202,24 @@ view :
     -> Html ClientTypes.Msg
 view model =
     let
+        currentLocation =
+            Engine.getCurrentLocation model.engineModel
+                |> findEntity
+
         displayState =
-            { currentLocation =
-                Engine.getCurrentLocation model.engineModel
-                    |> findEntity
+            { currentLocation = currentLocation
             , itemsInCurrentLocation =
                 Engine.getItemsInCurrentLocation model.engineModel
                     |> List.map findEntity
             , charactersInCurrentLocation =
                 Engine.getCharactersInCurrentLocation model.engineModel
                     |> List.map findEntity
-            , locations =
-                Engine.getLocations model.engineModel
-                    |> List.map findEntity
+            , exits =
+                getExits currentLocation
+                    |> List.map
+                        (\( direction, id ) ->
+                            ( direction, findEntity id )
+                        )
             , itemsInInventory =
                 Engine.getItemsInInventory model.engineModel
                     |> List.map findEntity
