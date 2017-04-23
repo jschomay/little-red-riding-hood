@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: default;
+}
+
+ul, li {
+  list-style: none;
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 1.1em;
+  padding: 5px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.1em;
+  padding: 4px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.1em;
+  padding: 3px;
+}
+
+html, body { height: 100%; }
+
+body {
+  margin: 0px;
+  padding: 0px;
+  background-color: white;
+  background-color: #222;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game {
+  flex: 0 0 auto;
+  position: relative;
+  height: 670px;
+  width: 1200px;
+  margin: 0;
+}
+
+.background {
+  height: 100%;
+  width: 100%;
+  background-position: top left;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.foreground {
+  height: 100%;
+  width: 100%;
+  background-position: top left;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.sprite {
+  background-position: top left;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  cursor: pointer;
+  border: 1px solid rgba(222,222,222,0.3);
+}
+
+.story {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(10,10,10,0.6);
+  color: #bbb;
+  font-family: Palatino, Georgia, times;
+  font-size: 1.5em;
+  line-height: 1.3em;
+  padding: 1.4em;
+  animation: fadeIn 0.7s linear forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
