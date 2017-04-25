@@ -220,6 +220,7 @@ view model =
                 Engine.getEnding model.engineModel
             , story =
                 List.head model.storyLine |> Maybe.withDefault ""
+            , engineModel = model.engineModel
             }
     in
         Theme.Layout.view displayState

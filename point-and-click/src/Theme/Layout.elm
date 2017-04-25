@@ -7,6 +7,7 @@ import Html.Events exposing (..)
 import ClientTypes exposing (..)
 import Components exposing (..)
 import Markdown
+import Engine
 
 
 view :
@@ -17,6 +18,7 @@ view :
     , itemsInInventory : List Entity
     , ending : Maybe String
     , story : String
+    , engineModel : Engine.Model
     }
     -> Html Msg
 view displayState =
@@ -25,7 +27,7 @@ view displayState =
             getBackgroundForeground displayState.currentLocation
 
         backGroundImage bg =
-            style [ ( "backgroundImage", "url(/img/" ++ bg ++ ")" ) ]
+            style [ ( "backgroundImage", "url(img/" ++ bg ++ ")" ) ]
 
         sizeAttrs x y w h =
             style
@@ -38,6 +40,9 @@ view displayState =
         background =
             [ div [ class "background", backGroundImage bg ] [] ]
 
+        fromConditional =
+            Maybe.andThen (Engine.chooseFrom displayState.engineModel >> Maybe.map .value)
+
         sprites =
             displayState.charactersInCurrentLocation
                 ++ displayState.itemsInCurrentLocation
@@ -45,13 +50,19 @@ view displayState =
                 |> List.filterMap
                     (\entity ->
                         getSprite entity
+                            |> fromConditional
                             |> Maybe.map
                                 (\{ x, y, w, h } ->
                                     div
-                                        [ class "sprite"
-                                        , sizeAttrs x y w h
-                                        , onClick <| Interact entity.id
-                                        ]
+                                        (List.filterMap identity
+                                            [ Just <| class "sprite"
+                                            , Just <| sizeAttrs x y w h
+                                            , Just <| onClick <| Interact entity.id
+                                            , getImage entity
+                                                |> fromConditional
+                                                |> Maybe.map backGroundImage
+                                            ]
+                                        )
                                         []
                                 )
                     )
