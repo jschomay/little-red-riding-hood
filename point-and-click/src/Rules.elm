@@ -6,20 +6,163 @@ import ClientTypes exposing (..)
 
 rulesData : List (RuleData Engine.Rule)
 rulesData =
-    { summary = "leaving without cape"
-    , interaction = withAnyLocation
+    { summary = "inspect cape"
+    , interaction = with "Cape"
     , conditions =
         [ currentLocationIs "Cottage"
-        , itemIsNotInInventory "Cape"
+        , hasNotPreviouslyInteractedWith "Mother"
         ]
     , changes =
         []
     , narrative =
         [ """
-"Oh Little Red Ridding Hood," her mother called out, "don't forget your cape.  It might be cold in the woods."
+Little Red Ridding Hood's namesake, her red cape.
 """
         ]
     }
+        :: { summary = "mother"
+           , interaction = with "Mother"
+           , conditions =
+                []
+           , changes =
+                []
+           , narrative =
+                [ "\"Don't keep Grandma waiting.\""
+                , "\"Remember, don't talk to strangers.\""
+                , "\"Hurry along Little Red Ridding Hood.\""
+                ]
+           }
+        :: { summary = "Little Red Ridding Hood in Cottage"
+           , interaction = with "Little Red Ridding Hood"
+           , conditions =
+                [ characterIsInLocation "Little Red Ridding Hood" "Cottage" ]
+           , changes =
+                []
+           , narrative =
+                [ "Little Red Ridding Hood, who lived with her mother in the cottage near the woods."
+                , "Her Grandma gave her a red cape for her 7th birthday, and she's worn it every day since."
+                , "Shouldn't you be on your way?"
+                , "There's more to see here."
+                ]
+           }
+        :: { summary = "Little Red Ridding Hood in River"
+           , interaction = with "Little Red Ridding Hood"
+           , conditions =
+                [ characterIsInLocation "Little Red Ridding Hood" "River" ]
+           , changes =
+                []
+           , narrative =
+                [ "Little Red Ridding Hood sang happy songs as she made her way to the old bridge."
+                , "She loved being outside, although her mother usually forbade her to go past the old bridge."
+                , "Little Red Ridding Hood was eager to see her Grandma."
+                ]
+           }
+        :: { summary = "Little Red Ridding Hood in Woods"
+           , interaction = with "Little Red Ridding Hood"
+           , conditions =
+                [ characterIsInLocation "Little Red Ridding Hood" "Woods" ]
+           , changes =
+                []
+           , narrative =
+                [ "Little Red Ridding Hood felt slightly afraid in the dark woods."
+                , "She seemed very small amongst the tall trees."
+                , "She couldn't wait to safely get to her Grandma's house."
+                ]
+           }
+        :: { summary = "Little Red Ridding Hood in Woods2"
+           , interaction = with "Little Red Ridding Hood"
+           , conditions =
+                [ characterIsInLocation "Little Red Ridding Hood" "Woods2" ]
+           , changes =
+                []
+           , narrative =
+                [ "At first the wolf startled her, but he seemed so friendly that she soon relaxed."
+                , "Grandma's house wasn't far, but it would be rude to ignore the wolf, wouldn't it?"
+                ]
+           }
+        :: { summary = "Little Red Ridding Hood after talking to wolf"
+           , interaction = with "Little Red Ridding Hood"
+           , conditions =
+                [ characterIsInLocation "Little Red Ridding Hood" "Woods2"
+                , characterIsInLocation "Wolf" "Grandma's house"
+                ]
+           , changes =
+                []
+           , narrative =
+                [ "\"That was unusual,\" Little Red Ridding Hood thought to herself.  \"Oh well, I better get to Grandma's.\""
+                ]
+           }
+        :: { summary = "Little Red Ridding Hood in Grandma's House"
+           , interaction = with "Little Red Ridding Hood"
+           , conditions =
+                [ characterIsInLocation "Little Red Ridding Hood" "Grandma's House" ]
+           , changes =
+                []
+           , narrative =
+                []
+           }
+        :: { summary = "Basket of food"
+           , interaction = with "Basket of food"
+           , conditions =
+                []
+           , changes =
+                [ moveItemToInventory "Basket of food" ]
+           , narrative =
+                [ "The basket had all kinds of delicious food and cakes and even some wine." ]
+           }
+        :: { summary = "Cape"
+           , interaction = with "Cape"
+           , conditions =
+                []
+           , changes =
+                [ moveItemToInventory "Cape" ]
+           , narrative =
+                [ "Little Red Ridding Hood eagerly put on her red cape." ]
+           }
+        :: { summary = "mother's instructions"
+           , interaction = with "Mother"
+           , conditions =
+                [ currentLocationIs "Cottage"
+                , hasNotPreviouslyInteractedWith "Mother"
+                ]
+           , changes =
+                [ moveItemToLocation "Basket of food" "Cottage" ]
+           , narrative =
+                [ """
+One day, her mother said to her, "Little Red Ridding Hood, take this basket of food to your Grandma, who lives in the woods, because she is not feeling well.  And remember, don't talk to strangers on the way!"
+"""
+                ]
+           }
+        :: { summary = "leaving before mother's instructions"
+           , interaction = withAnyLocation
+           , conditions =
+                [ hasNotPreviouslyInteractedWith "Mother"
+                , currentLocationIs "Cottage"
+                , itemIsNotInInventory "Cape"
+                , itemIsNotInInventory "Basket of food"
+                ]
+           , changes =
+                []
+           , narrative =
+                [ """
+The way out of the cottage.
+"""
+                ]
+           }
+        :: { summary = "leaving without cape"
+           , interaction = withAnyLocation
+           , conditions =
+                [ currentLocationIs "Cottage"
+                , itemIsNotInInventory "Cape"
+                ]
+           , changes =
+                []
+           , narrative =
+                [ """
+"Oh Little Red Ridding Hood," her mother called out, "don't forget your cape.  It might be cold in the woods."
+"""
+                ]
+           }
         :: { summary = "leaving without basket"
            , interaction = withAnyLocation
            , conditions =
@@ -118,7 +261,7 @@ Little Red Ridding Hood knew that her mother would be cross if she did not bring
                 ]
            , narrative =
                 [ """
-Little Red Ridding Hood skipped out of the cottage, singing a happy song and swinging the basket of food by her side.  Soon she arrived at the old bridge that went over the river.  On the other side of the bridge were the woods where Grandma lived.
+Little Red Ridding Hood skipped out of the cottage, singing as she went.  Soon she arrived at the old bridge over the river.  On the other side of the bridge were the woods where Grandma lived.
 """
                 ]
            }
@@ -154,21 +297,37 @@ The wolf was still there, trying to hide the hungry look in his eye.
                 ]
            , narrative =
                 [ """
-Little Red Ridding Hood followed the path deep into the woods.  Birds chirped in the trees high above, and squirrels scampered up the trunks, looking for nuts.  Little Red Ridding Hood loved the woods and all of the animals that lived there.
-
-At first, Little Red Ridding Hood did not see the wolf spying on her in the shadows, looking at her basket of food and licking his chops.  He was a crafty wolf, and came up with a plan.
-
-Putting on his best smile, the wolf greeted Little Red Ridding Hood.  "Good morning my pretty child.  What a lovely cape you have on.  May I ask, where are you going with that delicious looking basket of food?"
+Little Red Ridding Hood made her way over the old bridge and ventured into the dark woods.  At first, she did not notice the wolf, who was watching her from the shadows, licking his lips.
+"""
+                ]
+           }
+        :: { summary = "the wolf"
+           , interaction = with "Wolf"
+           , conditions =
+                [ currentLocationIs "Woods"
+                , itemIsInInventory "Cape"
+                , itemIsInInventory "Basket of food"
+                , characterIsInLocation "Wolf" "Woods"
+                , hasNotPreviouslyInteractedWith "Wolf"
+                ]
+           , changes =
+                [ moveTo "Woods2"
+                , moveCharacterToLocation "Wolf" "Woods2"
+                , moveCharacterToLocation "Little Red Ridding Hood" "Woods2"
+                ]
+           , narrative =
+                [ """
+The wolf was a crafty wolf, and came up with a plan.  Putting on his best smile, he called out to Little Red Ridding Hood, "Good afternoon little girl!  What a pretty red cape you have!  Tell me, where are you going with that basket of food?"
 """
                 ]
            }
         :: { summary = "ignoring the wolf"
            , interaction = with "Grandma's house"
            , conditions =
-                [ currentLocationIs "Woods"
+                [ currentLocationIs "Woods2"
                 , itemIsInInventory "Cape"
                 , itemIsInInventory "Basket of food"
-                , characterIsInLocation "Wolf" "Woods"
+                , characterIsInLocation "Wolf" "Woods2"
                 ]
            , changes =
                 [ moveTo "Grandma's house"
@@ -177,19 +336,18 @@ Putting on his best smile, the wolf greeted Little Red Ridding Hood.  "Good morn
                 ]
            , narrative =
                 [ """
-Little Red Ridding Hood remembered her mother's warning about not talking to strangers, and hurried away to Grandma's house.
+Although the wolf seemed very polite, Little Red Ridding Hood remembered her mother's warning about not talking to strangers, and hurried along.
 
-Grandma was so happy to see Little Red Ridding Hood, and they ate together the goodies she had brought, and everyone lived happily ever after.
+Grandma was so happy to see Little Red Ridding Hood, and together they ate the goodies she had brought, and everyone lived happily ever after.
 """
                 ]
            }
         :: { summary = "talking to the wolf in the Woods"
            , interaction = with "Wolf"
            , conditions =
-                [ currentLocationIs "Woods"
+                [ currentLocationIs "Woods2"
                 , itemIsInInventory "Cape"
                 , itemIsInInventory "Basket of food"
-                , characterIsInLocation "Wolf" "Woods"
                 ]
            , changes =
                 [ moveCharacterToLocation "Wolf" "Grandma's house"
@@ -197,41 +355,50 @@ Grandma was so happy to see Little Red Ridding Hood, and they ate together the g
                 ]
            , narrative =
                 [ """
-Little Red Ridding Hood thought the wolf looked so kind and so friendly that she happily told him, "I'm going to visit Grandma, who lives in these woods.  She isn't feeling well, so I am bringing her a basket of food."
+The wolf seemed so polite and friendly that she happily replied, "I'm visiting my sick Grandma who lives in these woods, to bring her this basket of food."
 
-The wolf muttered "That's very interesting.  I hope she feels better soon."  Then he made a funny little bow and scampered off down the path.
+Without another word, the wolf smiled and ran off.
 """
                 ]
            }
         :: { summary = "finding the wolf at Grandma's house"
            , interaction = with "Grandma's house"
            , conditions =
-                [ currentLocationIs "Woods"
+                [ currentLocationIs "Woods2"
                 , characterIsInLocation "Wolf" "Grandma's house"
                 ]
            , changes =
                 [ moveTo "Grandma's house"
                 , moveCharacterToLocation "Little Red Ridding Hood" "Grandma's house"
-                , endStory "The End"
                 ]
            , narrative =
                 [ """
-Little Red Ridding Hood found the door to Grandma's house unlocked, so she went in.  She saw Grandma sleeping in the bed with the covers pulled high over her face, and her nightcap pulled low over her forehead.
-
-But she looked a little different than usual.  Little Red Ridding Hood did not know that the wolf had ran to Grandma's house before her, and eaten Grandma up, and was now lying in her bed pretending to be Grandma!
-
+Little Red Ridding Hood found the door unlocked, so she went in.  She saw Grandma laying in the bed with the covers pulled high over her face, and her nightcap pulled low over her forehead, but something didn't seem right.
+"""
+                ]
+           }
+        :: { summary = "Little Red Ridding Hood demise"
+           , interaction = with "Wolf"
+           , conditions =
+                [ currentLocationIs "Grandma's house" ]
+           , changes =
+                [ endStory "The End" ]
+           , narrative =
+                [ """
 "Grandma, what big eyes you have."
 
-"The better to see you with, my dear," said the wolf, as softly as he could.
-
+"The better to see you with, my dear!" Grandma's voice sounded different.
+  """
+                , """
 "And Grandma, what big ears you have."
 
-"The better to hear you with, my dear."
-
+"The better to hear you with, my dear!" She wasn't sure, but Grandma looked like the wolf from the woods.
+  """
+                , """
 "And Grandma, what big teeth you have!"
 
 "The better to gobble you up with!"  And the wolf jumped out of bed and that is exactly what he did.  And that is why we don't talk to strangers.
-"""
+  """
                 ]
            }
         :: []

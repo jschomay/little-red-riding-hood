@@ -95,7 +95,6 @@ init =
             [ moveTo "Cottage"
             , loadScene "start"
             , moveItemToLocation "Cape" "Cottage"
-            , moveItemToLocation "Basket of food" "Cottage"
             , moveCharacterToLocation "Little Red Ridding Hood" "Cottage"
             , moveCharacterToLocation "Mother" "Cottage"
             , moveCharacterToLocation "Wolf" "Woods"
@@ -114,8 +113,6 @@ init =
           , storyLine =
                 [ """
 Once upon a time there was a young girl named Little Red Ridding Hood, because she was so fond of her red cape that her grandma gave to her.
-
-One day, her mother said to her, "Little Red Ridding Hood, take this basket of food to your Grandma, who lives in the woods, because she is not feeling well.  And remember, don't talk to strangers on the way!"
 """
                 ]
           , content = pluckContent
@@ -129,36 +126,33 @@ update :
     -> Model
     -> ( Model, Cmd ClientTypes.Msg )
 update msg model =
-    if Engine.getEnding model.engineModel /= Nothing then
-        ( model, Cmd.none )
-    else
-        case msg of
-            Interact interactableId ->
-                let
-                    ( newEngineModel, maybeMatchedRuleId ) =
-                        Engine.update interactableId model.engineModel
+    case msg of
+        Interact interactableId ->
+            let
+                ( newEngineModel, maybeMatchedRuleId ) =
+                    Engine.update interactableId model.engineModel
 
-                    narrative =
-                        getNarrative model.content maybeMatchedRuleId
-                            |> Maybe.withDefault (findEntity interactableId |> getDisplay |> .description)
+                narrative =
+                    getNarrative model.content maybeMatchedRuleId
+                        |> Maybe.withDefault (findEntity interactableId |> getDisplay |> .description)
 
-                    updatedContent =
-                        maybeMatchedRuleId
-                            |> Maybe.map (\id -> Dict.update id updateContent model.content)
-                            |> Maybe.withDefault model.content
-                in
-                    ( { model
-                        | engineModel = newEngineModel
-                        , storyLine = narrative :: model.storyLine
-                        , content = updatedContent
-                      }
-                    , Cmd.none
-                    )
-
-            Loaded ->
-                ( { model | loaded = True }
+                updatedContent =
+                    maybeMatchedRuleId
+                        |> Maybe.map (\id -> Dict.update id updateContent model.content)
+                        |> Maybe.withDefault model.content
+            in
+                ( { model
+                    | engineModel = newEngineModel
+                    , storyLine = narrative :: model.storyLine
+                    , content = updatedContent
+                  }
                 , Cmd.none
                 )
+
+        Loaded ->
+            ( { model | loaded = True }
+            , Cmd.none
+            )
 
 
 port loaded : (Bool -> msg) -> Sub msg

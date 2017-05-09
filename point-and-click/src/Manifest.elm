@@ -71,16 +71,21 @@ noConditionals a =
 items : List Entity
 items =
     [ item "Cape" "Little Red Ridding Hood's namesake."
-        |> addSprite (noConditionals { x = 600, y = 150, w = 70, h = 140 })
+        |> addSprite (noConditionals { x = 490, y = 310, w = 40, h = 220 })
     , item "Basket of food" "Some goodies to take to Grandma."
-        |> addSprite (noConditionals { x = 450, y = 300, w = 70, h = 70 })
+        |> addSprite (noConditionals { x = 290, y = 480, w = 140, h = 80 })
     ]
 
 
 characters : List Entity
 characters =
     [ character "Little Red Ridding Hood" "Sweet and innocent, she spent her days playing around her cottage where she lived with her mother."
-        |> addSprite (noConditionals { x = 730, y = 230, w = 70, h = 140 })
+        |> addSprite
+            [ { conditions = [ currentLocationIs "Cottage" ], value = { x = 590, y = 280, w = 120, h = 280 } }
+            , { conditions = [ currentLocationIs "River" ], value = { x = 130, y = 270, w = 110, h = 160 } }
+            , { conditions = [ currentLocationIs "Woods" ], value = { x = 200, y = 390, w = 100, h = 150 } }
+            , { conditions = [ currentLocationIs "Woods2" ], value = { x = 200, y = 390, w = 100, h = 150 } }
+            ]
         |> addImage
             [ { conditions = []
               , value = "lrrh--empty.jpg"
@@ -96,8 +101,13 @@ characters =
               }
             ]
     , character "Mother" "Little Red Ridding Hood's mother, who looks after her."
-        |> addSprite (noConditionals { x = 250, y = 150, w = 100, h = 250 })
+        |> addSprite (noConditionals { x = 100, y = 150, w = 270, h = 410 })
     , character "Wolf" "A very sly and clever wolf, who lives in the woods."
+        |> addSprite
+            [ { conditions = [ currentLocationIs "Woods" ], value = { x = 340, y = 120, w = 500, h = 420 } }
+            , { conditions = [ currentLocationIs "Woods2" ], value = { x = 330, y = 220, w = 490, h = 320 } }
+            , { conditions = [ currentLocationIs "Grandma's house" ], value = { x = 520, y = 130, w = 350, h = 320 } }
+            ]
     , character "Grandma" "Little Red Ridding Hood's grandmother, who lives alone in a cottage in the woods."
     ]
 
@@ -106,21 +116,26 @@ locations : List Entity
 locations =
     [ location "Cottage" "The cottage where Little Red Ridding Hood and her mother live."
         |> addExits [ ( East, "River" ) ]
-        |> addSprite (noConditionals { x = 0, y = 50, w = 300, h = 400 })
-        |> addBackgroundForeground "cottage-bg.jpg" Nothing
+        |> addSprite (noConditionals { x = 0, y = 140, w = 100, h = 300 })
+        |> addBackgroundForeground "cottage.jpg" Nothing
     , location "River" "A river that runs by Little Red Ridding Hood's cottage."
         |> addExits [ ( West, "Cottage" ), ( East, "Woods" ) ]
         |> addSprite
             [ { conditions = [ currentLocationIs "Cottage" ]
-              , value = { x = 900, y = 250, w = 300, h = 200 }
+              , value = { x = 890, y = 180, w = 40, h = 400 }
               }
             , { conditions = [ currentLocationIs "Woods" ]
               , value = { x = 0, y = 250, w = 300, h = 200 }
               }
             ]
-        |> addBackgroundForeground "woods-bg.jpg" Nothing
+        |> addBackgroundForeground "river.jpg" Nothing
     , location "Woods" "The forests that surround Little Red Ridding Hood's cottage."
-        |> addExits [ ( West, "River" ), ( East, "Grandma's house" ) ]
-        |> addSprite (noConditionals { x = 900, y = 250, w = 300, h = 200 })
+        |> addSprite (noConditionals { x = 750, y = 130, w = 180, h = 320 })
+        |> addBackgroundForeground "woods.jpg" Nothing
+    , location "Woods2" "The forests that surround Little Red Ridding Hood's cottage."
+        |> addExits [ ( East, "Grandma's house" ) ]
+        |> addBackgroundForeground "woods2.jpg" Nothing
     , location "Grandma's house" "The cabin in the woods where Grandma lives alone."
+        |> addBackgroundForeground "grandmas-house.jpg" Nothing
+        |> addSprite (noConditionals { x = 800, y = 270, w = 100, h = 270 })
     ]
