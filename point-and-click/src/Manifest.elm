@@ -71,9 +71,11 @@ noConditionals a =
 items : List Entity
 items =
     [ item "Cape" "Little Red Ridding Hood's namesake."
-        |> addSprite (noConditionals { x = 490, y = 310, w = 40, h = 220 })
+        |> addSprite (noConditionals { x = 490, y = 310, w = 33, h = 220 })
+        |> addImage (noConditionals "cape.png")
     , item "Basket of food" "Some goodies to take to Grandma."
-        |> addSprite (noConditionals { x = 290, y = 480, w = 140, h = 80 })
+        |> addSprite (noConditionals { x = 290, y = 465, w = 140, h = 90 })
+        |> addImage (noConditionals "basket.png")
     ]
 
 
@@ -81,27 +83,32 @@ characters : List Entity
 characters =
     [ character "Little Red Ridding Hood" "Sweet and innocent, she spent her days playing around her cottage where she lived with her mother."
         |> addSprite
-            [ { conditions = [ currentLocationIs "Cottage" ], value = { x = 590, y = 280, w = 120, h = 280 } }
+            [ { conditions = [ currentLocationIs "Cottage" ], value = { x = 590, y = 275, w = 144, h = 280 } }
+            , { conditions = [ currentLocationIs "Cottage", itemIsInInventory "Cape", itemIsInInventory "Basket of food" ], value = { x = 590, y = 275, w = 195, h = 280 } }
             , { conditions = [ currentLocationIs "River" ], value = { x = 130, y = 270, w = 110, h = 160 } }
             , { conditions = [ currentLocationIs "Woods" ], value = { x = 200, y = 390, w = 100, h = 150 } }
             , { conditions = [ currentLocationIs "Woods2" ], value = { x = 200, y = 390, w = 100, h = 150 } }
             ]
         |> addImage
-            [ { conditions = []
-              , value = "lrrh--empty.jpg"
+            [ { conditions = [ currentLocationIs "Cottage", itemIsNotInInventory "Cape", itemIsNotInInventory "Basket of food" ]
+              , value = "lrrh-empty.png"
               }
-            , { conditions = [ itemIsInInventory "Cape" ]
-              , value = "lrrh--cape.jpg"
+            , { conditions = [ currentLocationIs "Cottage", itemIsInInventory "Cape" ]
+              , value = "lrrh-cape.png"
               }
-            , { conditions = [ itemIsInInventory "Basket of food" ]
-              , value = "lrrh--basket.jpg"
+            , { conditions = [ currentLocationIs "Cottage", itemIsInInventory "Basket of food" ]
+              , value = "lrrh-basket.png"
               }
-            , { conditions = [ itemIsInInventory "Basket of food", itemIsInInventory "Cape" ]
-              , value = "lrrh.jpg"
+            , { conditions = [ currentLocationIs "Cottage", itemIsInInventory "Basket of food", itemIsInInventory "Cape" ]
+              , value = "lrrh.png"
+              }
+            , { conditions = [ currentLocationIs "River" ]
+              , value = "lrrh-river.png"
               }
             ]
     , character "Mother" "Little Red Ridding Hood's mother, who looks after her."
-        |> addSprite (noConditionals { x = 100, y = 150, w = 270, h = 410 })
+        |> addSprite (noConditionals { x = 100, y = 145, w = 280, h = 410 })
+        |> addImage (noConditionals "mother.png")
     , character "Wolf" "A very sly and clever wolf, who lives in the woods."
         |> addSprite
             [ { conditions = [ currentLocationIs "Woods" ], value = { x = 340, y = 120, w = 500, h = 420 } }

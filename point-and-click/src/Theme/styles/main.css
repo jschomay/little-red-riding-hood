@@ -80,8 +80,7 @@ body {
 }
 
 .sprite {
-  background-position: top left;
-  background-size: 100%;
+  background-position: center center;
   background-repeat: no-repeat;
   position: absolute;
   cursor: pointer;
