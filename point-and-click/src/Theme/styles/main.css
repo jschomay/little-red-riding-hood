@@ -61,6 +61,7 @@ body {
   height: 700px;
   width: 932px;
   margin: 0;
+  overflow: hidden;
 }
 
 .background {

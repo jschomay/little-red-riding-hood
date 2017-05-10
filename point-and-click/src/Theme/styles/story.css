@@ -1,0 +1,10 @@
+.lrrh-river {
+  animation-duration: 8s;
+  animation-name: enter-from-left;
+}
+
+@keyframes enter-from-left {
+  from {
+    left: -120px;
+  }
+}

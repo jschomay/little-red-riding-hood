@@ -55,7 +55,7 @@ view displayState =
                                 (\{ x, y, w, h } ->
                                     div
                                         (List.filterMap identity
-                                            [ Just <| class "sprite"
+                                            [ Just <| class <| "sprite " ++ (getStyle entity |> fromConditional |> Maybe.withDefault "")
                                             , Just <| sizeAttrs x y w h
                                             , Just <| onClick <| Interact entity.id
                                             , getImage entity

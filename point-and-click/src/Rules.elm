@@ -52,8 +52,7 @@ Little Red Ridding Hood's namesake, her red cape.
            , changes =
                 []
            , narrative =
-                [ "Little Red Ridding Hood sang happy songs as she made her way to the old bridge."
-                , "She loved being outside, although her mother usually forbade her to go past the old bridge."
+                [ "Little Red Ridding Hood loved being outside, although her mother usually forbade her to go past the old bridge."
                 , "Little Red Ridding Hood was eager to see her Grandma."
                 ]
            }

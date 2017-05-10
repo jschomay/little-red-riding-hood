@@ -48,7 +48,7 @@ type alias Conditional a =
 
 type Component
     = Display { name : String, description : String }
-    | Style String
+    | Style (Conditional String)
     | ConnectedLocations Exits
     | BackgroundForeground String (Maybe String)
     | Sprite (Conditional { x : Int, y : Int, w : Int, h : Int })

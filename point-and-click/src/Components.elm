@@ -23,23 +23,18 @@ getDisplay entity =
             |> Maybe.withDefault { name = errorMsg, description = errorMsg }
 
 
-getStyle : Entity -> String
+getStyle : Entity -> Maybe (Conditional String)
 getStyle entity =
-    let
-        errorMsg =
-            "Error: no Style component information found for enity id: " ++ entity.id
-    in
-        Dict.get "style" entity.components
-            |> Maybe.andThen
-                (\c ->
-                    case c of
-                        Style s ->
-                            Just s
+    Dict.get "style" entity.components
+        |> Maybe.andThen
+            (\c ->
+                case c of
+                    Style s ->
+                        Just s
 
-                        _ ->
-                            Nothing
-                )
-            |> Maybe.withDefault errorMsg
+                    _ ->
+                        Nothing
+            )
 
 
 getExits : Entity -> Exits

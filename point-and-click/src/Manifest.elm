@@ -10,9 +10,9 @@ display name description =
     Dict.fromList [ ( "display", Display { name = name, description = description } ) ]
 
 
-addStyle : String -> Components -> Components
-addStyle selector components =
-    Dict.insert "style" (Style selector) components
+addStyle : Conditional String -> Entity -> Entity
+addStyle selector =
+    addComponent "style" (Style selector)
 
 
 addExits : List ( Direction, String ) -> Entity -> Entity
@@ -52,7 +52,6 @@ location name description =
     { id = name
     , components =
         display name description
-            |> addStyle name
     }
 
 
@@ -82,10 +81,13 @@ items =
 characters : List Entity
 characters =
     [ character "Little Red Ridding Hood" "Sweet and innocent, she spent her days playing around her cottage where she lived with her mother."
+        |> addStyle
+            [ { conditions = [ currentLocationIs "River" ], value = "lrrh-river" }
+            ]
         |> addSprite
             [ { conditions = [ currentLocationIs "Cottage" ], value = { x = 590, y = 275, w = 144, h = 280 } }
             , { conditions = [ currentLocationIs "Cottage", itemIsInInventory "Cape", itemIsInInventory "Basket of food" ], value = { x = 590, y = 275, w = 195, h = 280 } }
-            , { conditions = [ currentLocationIs "River" ], value = { x = 130, y = 270, w = 110, h = 160 } }
+            , { conditions = [ currentLocationIs "River" ], value = { x = 190, y = 270, w = 110, h = 160 } }
             , { conditions = [ currentLocationIs "Woods" ], value = { x = 200, y = 390, w = 100, h = 150 } }
             , { conditions = [ currentLocationIs "Woods2" ], value = { x = 200, y = 390, w = 100, h = 150 } }
             ]
