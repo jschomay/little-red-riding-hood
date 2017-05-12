@@ -1,10 +1,58 @@
-.lrrh-river {
-  animation-duration: 8s;
-  animation-name: enter-from-left;
+.tree, .bedpost {
+  pointer-events: none;
 }
 
-@keyframes enter-from-left {
+.lrrh-river {
+  animation-duration: 8s;
+  animation-name: lrrh-river;
+}
+@keyframes lrrh-river {
   from {
     left: -120px;
+  }
+}
+
+.lrrh-woods {
+  animation-duration: 6s;
+  animation-name: lrrh-woods;
+}
+@keyframes lrrh-woods {
+  from {
+    left: -20px;
+  }
+}
+
+.lrrh-retreat {
+  animation-duration: 2s;
+  animation-delay: 0.8s;
+  animation-name: lrrh-retreat;
+  animation-fill-mode: forwards;
+}
+@keyframes lrrh-retreat {
+  to {
+    left: 140px;
+  }
+}
+
+.wolf-approach {
+  animation-duration: 3s;
+  animation-name: wolf-approach;
+  animation-fill-mode: forwards;
+}
+@keyframes wolf-approach {
+  to {
+    left: 260px;
+  }
+}
+
+.wolf-retreat {
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19);
+  animation-name: wolf-retreat;
+  animation-fill-mode: forwards;
+}
+@keyframes wolf-retreat {
+  to {
+    left: 960px;
   }
 }

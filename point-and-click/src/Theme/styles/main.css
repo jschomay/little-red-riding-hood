@@ -78,11 +78,16 @@ body {
   background-position: top left;
   background-size: 100%;
   background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
 }
 
 .sprite {
   background-position: center center;
   background-repeat: no-repeat;
+  background-size: contain;
   position: absolute;
   cursor: pointer;
   border: 1px solid rgba(222,122,122,0.5);
@@ -99,6 +104,7 @@ body {
   line-height: 1.3em;
   padding: 1.4em;
   animation: fadeIn 0.7s linear forwards;
+  z-index: 99;
 }
 
 @keyframes fadeIn {

@@ -51,7 +51,7 @@ type Component
     | Style (Conditional String)
     | ConnectedLocations Exits
     | BackgroundForeground String (Maybe String)
-    | Sprite (Conditional { x : Int, y : Int, w : Int, h : Int })
+    | Sprite (Conditional { x : Int, y : Int, z : Int, w : Int, h : Int })
     | Image (Conditional String)
 
 

@@ -29,12 +29,13 @@ view displayState =
         backGroundImage bg =
             style [ ( "backgroundImage", "url(img/" ++ bg ++ ")" ) ]
 
-        sizeAttrs x y w h =
+        spriteStyle x y z w h =
             style
                 [ ( "left", toString x ++ "px" )
                 , ( "top", toString y ++ "px" )
                 , ( "width", toString w ++ "px" )
                 , ( "height", toString h ++ "px" )
+                , ( "zIndex", toString z )
                 ]
 
         background =
@@ -52,11 +53,11 @@ view displayState =
                         getSprite entity
                             |> fromConditional
                             |> Maybe.map
-                                (\{ x, y, w, h } ->
+                                (\{ x, y, z, w, h } ->
                                     div
                                         (List.filterMap identity
                                             [ Just <| class <| "sprite " ++ (getStyle entity |> fromConditional |> Maybe.withDefault "")
-                                            , Just <| sizeAttrs x y w h
+                                            , Just <| spriteStyle x y z w h
                                             , Just <| onClick <| Interact entity.id
                                             , getImage entity
                                                 |> fromConditional

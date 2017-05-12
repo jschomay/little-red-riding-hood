@@ -57,7 +57,7 @@ getBackgroundForeground entity =
             ( "empty", Nothing )
 
 
-getSprite : Entity -> Maybe (Conditional { x : Int, y : Int, w : Int, h : Int })
+getSprite : Entity -> Maybe (Conditional { x : Int, y : Int, z : Int, w : Int, h : Int })
 getSprite entity =
     case Dict.get "sprite" entity.components of
         Just (Sprite s) ->
