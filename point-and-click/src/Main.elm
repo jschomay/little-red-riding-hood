@@ -4,6 +4,7 @@ import Engine exposing (..)
 import Manifest exposing (..)
 import Rules exposing (rulesData)
 import Html exposing (..)
+import Html.Attributes exposing (..)
 import Theme.Layout
 import ClientTypes exposing (..)
 import Components exposing (..)
@@ -221,4 +222,7 @@ view model =
             , engineModel = model.engineModel
             }
     in
-        Theme.Layout.view displayState
+        if not model.loaded then
+            div [ class "loading" ] [ span [] [ text "Loading..." ] ]
+        else
+            Theme.Layout.view displayState
