@@ -90,44 +90,45 @@ pluckContent =
 
 init : ( Model, Cmd ClientTypes.Msg )
 init =
-    ( { engineModel =
-            Engine.init
-                { manifest =
+    let
+        startingState =
+            [ moveTo "Cottage"
+            , loadScene "start"
+            , addLocation "Cottage"
+            , addLocation "River"
+            , addLocation "Woods"
+            , addLocation "Grandma's house"
+            , moveItemToLocation "Cape" "Cottage"
+            , moveItemToLocation "Basket of food" "Cottage"
+            , moveCharacterToLocation "Little Red Riding Hood" "Cottage"
+            , moveCharacterToLocation "Mother" "Cottage"
+            , moveCharacterToLocation "Wolf" "Woods"
+            , moveCharacterToLocation "Grandma" "Grandma's house"
+            ]
+    in
+        ( { engineModel =
+                Engine.init
                     { items = getIds items
                     , locations = getIds locations
                     , characters = getIds characters
                     }
-                , rules = (pluckRules)
-                , startingScene = "start"
-                , startingLocation = "Cottage"
-                , setup =
-                    [ addLocation "Cottage"
-                    , addLocation "River"
-                    , addLocation "Woods"
-                    , addLocation "Grandma's house"
-                    , moveItemToLocation "Cape" "Cottage"
-                    , moveItemToLocation "Basket of food" "Cottage"
-                    , moveCharacterToLocation "Little Red Riding Hood" "Cottage"
-                    , moveCharacterToLocation "Mother" "Cottage"
-                    , moveCharacterToLocation "Wolf" "Woods"
-                    , moveCharacterToLocation "Grandma" "Grandma's house"
-                    ]
-                }
-      , loaded = False
-      , storyLine =
-            [ { interactableName = "Mother"
-              , interactableCssSelector = ""
-              , narrative = """
+                    pluckRules
+                    |> Engine.changeWorld startingState
+          , loaded = False
+          , storyLine =
+                [ { interactableName = "Mother"
+                  , interactableCssSelector = ""
+                  , narrative = """
 Once upon a time there was a young girl named Little Red Riding Hood, because she was so fond of her red cape that her grandma gave to her.
 
 One day, her mother said to her, "Little Red Riding Hood, take this basket of food to your Grandma, who lives in the woods, because she is not feeling well.  And remember, don't talk to strangers on the way!"
 """
-              }
-            ]
-      , content = pluckContent
-      }
-    , Cmd.none
-    )
+                  }
+                ]
+          , content = pluckContent
+          }
+        , Cmd.none
+        )
 
 
 update :
