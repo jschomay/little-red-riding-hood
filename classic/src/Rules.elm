@@ -35,7 +35,7 @@ rulesData =
                 ]
            }
         :: { summary = "describe cottage"
-           , interaction = withLocation "Cottage"
+           , interaction = with "Cottage"
            , conditions =
                 [ currentLocationIs "Cottage"
                 ]
@@ -48,7 +48,7 @@ The cottage where Little Red Riding Hood and her mother live.
                 ]
            }
         :: { summary = "trying to jump directly from Cottage to Grandma's house"
-           , interaction = withLocation "Grandma's house"
+           , interaction = with "Grandma's house"
            , conditions =
                 [ currentLocationIs "Cottage"
                 , itemIsInInventory "Cape"
@@ -63,7 +63,7 @@ The way to Grandma's house is over the river and through the woods.
                 ]
            }
         :: { summary = "trying to jump directly from River to Grandma's house"
-           , interaction = withLocation "Grandma's house"
+           , interaction = with "Grandma's house"
            , conditions =
                 [ currentLocationIs "River"
                 , itemIsInInventory "Cape"
@@ -78,7 +78,7 @@ The way to Grandma's house is through the woods.
                 ]
            }
         :: { summary = "trying to jump directly from Cottage to Woods"
-           , interaction = withLocation "Woods"
+           , interaction = with "Woods"
            , conditions =
                 [ currentLocationIs "Cottage"
                 , itemIsInInventory "Cape"
@@ -93,7 +93,7 @@ The woods are on the other side of the river.
                 ]
            }
         :: { summary = "going back to the Cottage"
-           , interaction = withLocation "Cottage"
+           , interaction = with "Cottage"
            , conditions =
                 [ currentLocationIsNot "Cottage"
                 ]
@@ -106,7 +106,7 @@ Little Red Riding Hood knew that her mother would be cross if she did not bring 
                 ]
            }
         :: { summary = "leaving the Cottage"
-           , interaction = withLocation "River"
+           , interaction = with "River"
            , conditions =
                 [ currentLocationIs "Cottage"
                 , itemIsInInventory "Cape"
@@ -123,7 +123,7 @@ Little Red Riding Hood skipped out of the cottage, singing a happy song and swin
                 ]
            }
         :: { summary = "going from Woods to River"
-           , interaction = withLocation "River"
+           , interaction = with "River"
            , conditions =
                 [ currentLocationIs "Woods"
                 , itemIsInInventory "Cape"
@@ -141,7 +141,7 @@ The wolf was still there, trying to hide the hungry look in his eye.
                 ]
            }
         :: { summary = "entering the Woods"
-           , interaction = withLocation "Woods"
+           , interaction = with "Woods"
            , conditions =
                 [ currentLocationIs "River"
                 , itemIsInInventory "Cape"
@@ -163,7 +163,7 @@ Putting on his best smile, the wolf greeted Little Red Riding Hood.  "Good morni
                 ]
            }
         :: { summary = "ignoring the wolf"
-           , interaction = withLocation "Grandma's house"
+           , interaction = with "Grandma's house"
            , conditions =
                 [ currentLocationIs "Woods"
                 , itemIsInInventory "Cape"
@@ -179,12 +179,12 @@ Putting on his best smile, the wolf greeted Little Red Riding Hood.  "Good morni
                 [ """
 Little Red Riding Hood remembered her mother's warning about not talking to strangers, and hurried away to Grandma's house.
 
-Grandma was so happy to see Little Red Riding Hood, and they ate together the goodies she had brought, and everyone lived happily ever after.
+Grandma was so happy to see Little Red Riding Hood, and together they ate the goodies she had brought, and everyone lived happily ever after.
 """
                 ]
            }
         :: { summary = "talking to the wolf in the Woods"
-           , interaction = withCharacter "Wolf"
+           , interaction = with "Wolf"
            , conditions =
                 [ currentLocationIs "Woods"
                 , itemIsInInventory "Cape"
@@ -204,7 +204,7 @@ The wolf muttered "That's very interesting.  I hope she feels better soon."  The
                 ]
            }
         :: { summary = "finding the wolf at Grandma's house"
-           , interaction = withLocation "Grandma's house"
+           , interaction = with "Grandma's house"
            , conditions =
                 [ currentLocationIs "Woods"
                 , characterIsInLocation "Wolf" "Grandma's house"
