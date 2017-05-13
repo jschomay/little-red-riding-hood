@@ -37,24 +37,24 @@ character name description =
 
 items : List Entity
 items =
-    [ item "Cape" "Little Red Ridding Hood's namesake."
+    [ item "Cape" "Little Red Riding Hood's namesake."
     , item "Basket of food" "Some goodies to take to Grandma."
     ]
 
 
 characters : List Entity
 characters =
-    [ character "Little Red Ridding Hood" "Sweet and innocent, she spent her days playing around her cottage where she lived with her mother."
-    , character "Mother" "Little Red Ridding Hood's mother, who looks after her."
+    [ character "Little Red Riding Hood" "Sweet and innocent, she spent her days playing around her cottage where she lived with her mother."
+    , character "Mother" "Little Red Riding Hood's mother, who looks after her."
     , character "Wolf" "A very sly and clever wolf, who lives in the woods."
-    , character "Grandma" "Little Red Ridding Hood's grandmother, who lives alone in a cottage in the woods."
+    , character "Grandma" "Little Red Riding Hood's grandmother, who lives alone in a cottage in the woods."
     ]
 
 
 locations : List Entity
 locations =
-    [ location "Cottage" "The cottage where Little Red Ridding Hood and her mother live."
-    , location "River" "A river that runs by Little Red Ridding Hood's cottage."
-    , location "Woods" "The forests that surround Little Red Ridding Hood's cottage."
+    [ location "Cottage" "The cottage where Little Red Riding Hood and her mother live."
+    , location "River" "A river that runs by Little Red Riding Hood's cottage."
+    , location "Woods" "The forests that surround Little Red Riding Hood's cottage."
     , location "Grandma's house" "The cabin in the woods where Grandma lives alone."
     ]

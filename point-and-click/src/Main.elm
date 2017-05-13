@@ -101,7 +101,7 @@ init =
             , moveItemToLocationFixed "Small tree" "Woods"
             , moveItemToLocationFixed "Signpost" "Woods"
             , moveItemToLocationFixed "Bedpost" "Grandma's house"
-            , moveCharacterToLocation "Little Red Ridding Hood" "Cottage"
+            , moveCharacterToLocation "Little Red Riding Hood" "Cottage"
             , moveCharacterToLocation "Mother" "Cottage"
             , moveCharacterToLocation "Wolf" "Woods"
             , moveCharacterToLocation "Grandma" "Grandma's house"
@@ -118,7 +118,7 @@ init =
           , loaded = False
           , storyLine =
                 [ """
-Once upon a time there was a young girl named Little Red Ridding Hood, because she was so fond of her red cape that her grandma gave to her.
+Once upon a time there was a young girl named Little Red Riding Hood, because she was so fond of her red cape that her grandma gave to her.
 """
                 ]
           , content = pluckContent
@@ -162,7 +162,7 @@ update msg model =
 
                     checkEnd =
                         if newTemptWolf == 3 then
-                            Engine.changeWorld [ endStory "The End", loadScene "bye bye Little Red Ridding Hood" ]
+                            Engine.changeWorld [ endStory "The End", loadScene "bye bye Little Red Riding Hood" ]
                         else
                             identity
                 in

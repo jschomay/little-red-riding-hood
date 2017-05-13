@@ -96,7 +96,7 @@ init =
             , loadScene "start"
             , moveItemToLocation "Cape" "Cottage"
             , moveItemToLocation "Basket of food" "Cottage"
-            , moveCharacterToLocation "Little Red Ridding Hood" "Cottage"
+            , moveCharacterToLocation "Little Red Riding Hood" "Cottage"
             , moveCharacterToLocation "Mother" "Cottage"
             , moveCharacterToLocation "Wolf" "Woods"
             , moveCharacterToLocation "Grandma" "Grandma's house"
@@ -113,9 +113,9 @@ init =
           , loaded = False
           , storyLine =
                 [ """
-Once upon a time there was a young girl named Little Red Ridding Hood, because she was so fond of her red cape that her grandma gave to her.
+Once upon a time there was a young girl named Little Red Riding Hood, because she was so fond of her red cape that her grandma gave to her.
 
-One day, her mother said to her, "Little Red Ridding Hood, take this basket of food to your Grandma, who lives in the woods, because she is not feeling well.  And remember, don't talk to strangers on the way!"
+One day, her mother said to her, "Little Red Riding Hood, take this basket of food to your Grandma, who lives in the woods, because she is not feeling well.  And remember, don't talk to strangers on the way!"
 """
                 ]
           , content = pluckContent

@@ -69,7 +69,7 @@ noConditionals a =
 
 items : List Entity
 items =
-    [ item "Cape" "Little Red Ridding Hood's namesake."
+    [ item "Cape" "Little Red Riding Hood's namesake."
         |> addSprite (noConditionals { x = 490, y = 310, z = 1, w = 33, h = 220 })
         |> addImage (noConditionals "cape.png")
     , item "Basket of food" "Some goodies to take to Grandma."
@@ -95,7 +95,7 @@ items =
 
 characters : List Entity
 characters =
-    [ character "Little Red Ridding Hood" "Sweet and innocent, she spent her days playing around her cottage where she lived with her mother."
+    [ character "Little Red Riding Hood" "Sweet and innocent, she spent her days playing around her cottage where she lived with her mother."
         |> addStyle
             [ { conditions = [ currentLocationIs "River" ], value = "lrrh-river" }
             , { conditions = [ currentLocationIs "Woods" ], value = "lrrh-woods" }
@@ -127,7 +127,7 @@ characters =
               , value = "lrrh.png"
               }
             ]
-    , character "Mother" "Little Red Ridding Hood's mother, who looks after her."
+    , character "Mother" "Little Red Riding Hood's mother, who looks after her."
         |> addSprite (noConditionals { x = 100, y = 145, z = 1, w = 280, h = 410 })
         |> addImage (noConditionals "mother.png")
     , character "Wolf" "A very sly and clever wolf, who lives in the woods."
@@ -135,22 +135,22 @@ characters =
             [ { conditions = [ currentLocationIs "Woods", currentSceneIs "Wolf!" ], value = "wolf-approach" }
             , { conditions = [ currentLocationIs "Woods", currentSceneIs "bye bye Grannie" ], value = "wolf-retreat" }
             , { conditions = [ currentLocationIs "Grandma's house" ], value = "wolf-as-grandma" }
-            , { conditions = [ currentLocationIs "Grandma's house", currentSceneIs "bye bye Little Red Ridding Hood" ], value = "wolf-attack" }
+            , { conditions = [ currentLocationIs "Grandma's house", currentSceneIs "bye bye Little Red Riding Hood" ], value = "wolf-attack" }
             ]
         |> addSprite
             [ { conditions = [ currentLocationIs "Woods" ], value = { x = 100, y = 100, z = 1, w = 779, h = 450 } }
             , { conditions = [ currentLocationIs "Woods", currentSceneIs "Wolf!" ], value = { x = 300, y = 120, z = 3, w = 1018, h = 429 } }
             , { conditions = [ currentLocationIs "Woods", currentSceneIs "bye bye Grannie" ], value = { x = 260, y = 120, z = 3, w = 1018, h = 429 } }
             , { conditions = [ currentLocationIs "Grandma's house" ], value = { x = 380, y = 95, z = 1, w = 480, h = 293 } }
-            , { conditions = [ currentLocationIs "Grandma's house", currentSceneIs "bye bye Little Red Ridding Hood" ], value = { x = 100, y = 120, z = 3, w = 1018, h = 429 } }
+            , { conditions = [ currentLocationIs "Grandma's house", currentSceneIs "bye bye Little Red Riding Hood" ], value = { x = 100, y = 120, z = 3, w = 1018, h = 429 } }
             ]
         |> addImage
             [ { conditions = [ currentLocationIs "Woods", hasNotPreviouslyInteractedWith "Wolf" ], value = "wolf-hiding.png" }
             , { conditions = [ currentLocationIs "Woods", hasPreviouslyInteractedWith "Wolf" ], value = "wolf.png" }
             , { conditions = [ currentLocationIs "Grandma's house" ], value = "wolf-as-grandma.png" }
-            , { conditions = [ currentLocationIs "Grandma's house", currentSceneIs "bye bye Little Red Ridding Hood" ], value = "wolf.png" }
+            , { conditions = [ currentLocationIs "Grandma's house", currentSceneIs "bye bye Little Red Riding Hood" ], value = "wolf.png" }
             ]
-    , character "Grandma" "Little Red Ridding Hood's grandmother, who lives alone in a cottage in the woods."
+    , character "Grandma" "Little Red Riding Hood's grandmother, who lives alone in a cottage in the woods."
         |> addSprite (noConditionals { x = 520, y = 135, z = 1, w = 280, h = 410 })
         |> addImage (noConditionals "grandma.png")
     ]
@@ -158,12 +158,12 @@ characters =
 
 locations : List Entity
 locations =
-    [ location "Cottage" "The cottage where Little Red Ridding Hood and her mother live."
+    [ location "Cottage" "The cottage where Little Red Riding Hood and her mother live."
         |> addStyle (noConditionals "cottage")
         |> addExits [ ( East, "River" ) ]
         |> addSprite (noConditionals { x = 0, y = 140, z = 1, w = 100, h = 300 })
         |> addBackgroundForeground "cottage.jpg" Nothing
-    , location "River" "A river that runs by Little Red Ridding Hood's cottage."
+    , location "River" "A river that runs by Little Red Riding Hood's cottage."
         |> addStyle (noConditionals "river")
         |> addExits [ ( West, "Cottage" ), ( East, "Woods" ) ]
         |> addImage
@@ -180,7 +180,7 @@ locations =
               }
             ]
         |> addBackgroundForeground "river.jpg" Nothing
-    , location "Woods" "The forests that surround Little Red Ridding Hood's cottage."
+    , location "Woods" "The forests that surround Little Red Riding Hood's cottage."
         |> addStyle (noConditionals "woods")
         |> addSprite (noConditionals { x = 620, y = 30, z = 1, w = 310, h = 420 })
         |> addBackgroundForeground "woods-bg.jpg" (Just "woods-fg.png")

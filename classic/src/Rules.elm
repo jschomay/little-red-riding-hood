@@ -16,7 +16,7 @@ rulesData =
         []
     , narrative =
         [ """
-"Oh Little Red Ridding Hood," her mother called out, "don't forget your cape.  It might be cold in the woods."
+"Oh Little Red Riding Hood," her mother called out, "don't forget your cape.  It might be cold in the woods."
 """
         ]
     }
@@ -30,7 +30,7 @@ rulesData =
                 []
            , narrative =
                 [ """
- "Oh Little Red Ridding Hood," her mother called out, "don't forget the basket of food to bring to Grandma!"
+ "Oh Little Red Riding Hood," her mother called out, "don't forget the basket of food to bring to Grandma!"
 """
                 ]
            }
@@ -43,7 +43,7 @@ rulesData =
                 []
            , narrative =
                 [ """
-The cottage where Little Red Ridding Hood and her mother live.
+The cottage where Little Red Riding Hood and her mother live.
 """
                 ]
            }
@@ -101,7 +101,7 @@ The woods are on the other side of the river.
                 []
            , narrative =
                 [ """
-Little Red Ridding Hood knew that her mother would be cross if she did not bring the basket of food to Grandma.
+Little Red Riding Hood knew that her mother would be cross if she did not bring the basket of food to Grandma.
 """
                 ]
            }
@@ -114,11 +114,11 @@ Little Red Ridding Hood knew that her mother would be cross if she did not bring
                 ]
            , changes =
                 [ moveTo "River"
-                , moveCharacterToLocation "Little Red Ridding Hood" "River"
+                , moveCharacterToLocation "Little Red Riding Hood" "River"
                 ]
            , narrative =
                 [ """
-Little Red Ridding Hood skipped out of the cottage, singing a happy song and swinging the basket of food by her side.  Soon she arrived at the old bridge that went over the river.  On the other side of the bridge were the woods where Grandma lived.
+Little Red Riding Hood skipped out of the cottage, singing a happy song and swinging the basket of food by her side.  Soon she arrived at the old bridge that went over the river.  On the other side of the bridge were the woods where Grandma lived.
 """
                 ]
            }
@@ -150,15 +150,15 @@ The wolf was still there, trying to hide the hungry look in his eye.
                 ]
            , changes =
                 [ moveTo "Woods"
-                , moveCharacterToLocation "Little Red Ridding Hood" "Woods"
+                , moveCharacterToLocation "Little Red Riding Hood" "Woods"
                 ]
            , narrative =
                 [ """
-Little Red Ridding Hood followed the path deep into the woods.  Birds chirped in the trees high above, and squirrels scampered up the trunks, looking for nuts.  Little Red Ridding Hood loved the woods and all of the animals that lived there.
+Little Red Riding Hood followed the path deep into the woods.  Birds chirped in the trees high above, and squirrels scampered up the trunks, looking for nuts.  Little Red Riding Hood loved the woods and all of the animals that lived there.
 
-At first, Little Red Ridding Hood did not see the wolf spying on her in the shadows, looking at her basket of food and licking his chops.  He was a crafty wolf, and came up with a plan.
+At first, Little Red Riding Hood did not see the wolf spying on her in the shadows, looking at her basket of food and licking his chops.  He was a crafty wolf, and came up with a plan.
 
-Putting on his best smile, the wolf greeted Little Red Ridding Hood.  "Good morning my pretty child.  What a lovely cape you have on.  May I ask, where are you going with that delicious looking basket of food?"
+Putting on his best smile, the wolf greeted Little Red Riding Hood.  "Good morning my pretty child.  What a lovely cape you have on.  May I ask, where are you going with that delicious looking basket of food?"
 """
                 ]
            }
@@ -172,14 +172,14 @@ Putting on his best smile, the wolf greeted Little Red Ridding Hood.  "Good morn
                 ]
            , changes =
                 [ moveTo "Grandma's house"
-                , moveCharacterToLocation "Little Red Ridding Hood" "Grandma's house"
+                , moveCharacterToLocation "Little Red Riding Hood" "Grandma's house"
                 , endStory "The End"
                 ]
            , narrative =
                 [ """
-Little Red Ridding Hood remembered her mother's warning about not talking to strangers, and hurried away to Grandma's house.
+Little Red Riding Hood remembered her mother's warning about not talking to strangers, and hurried away to Grandma's house.
 
-Grandma was so happy to see Little Red Ridding Hood, and they ate together the goodies she had brought, and everyone lived happily ever after.
+Grandma was so happy to see Little Red Riding Hood, and they ate together the goodies she had brought, and everyone lived happily ever after.
 """
                 ]
            }
@@ -197,7 +197,7 @@ Grandma was so happy to see Little Red Ridding Hood, and they ate together the g
                 ]
            , narrative =
                 [ """
-Little Red Ridding Hood thought the wolf looked so kind and so friendly that she happily told him, "I'm going to visit Grandma, who lives in these woods.  She isn't feeling well, so I am bringing her a basket of food."
+Little Red Riding Hood thought the wolf looked so kind and so friendly that she happily told him, "I'm going to visit Grandma, who lives in these woods.  She isn't feeling well, so I am bringing her a basket of food."
 
 The wolf muttered "That's very interesting.  I hope she feels better soon."  Then he made a funny little bow and scampered off down the path.
 """
@@ -211,14 +211,14 @@ The wolf muttered "That's very interesting.  I hope she feels better soon."  The
                 ]
            , changes =
                 [ moveTo "Grandma's house"
-                , moveCharacterToLocation "Little Red Ridding Hood" "Grandma's house"
+                , moveCharacterToLocation "Little Red Riding Hood" "Grandma's house"
                 , endStory "The End"
                 ]
            , narrative =
                 [ """
-Little Red Ridding Hood found the door to Grandma's house unlocked, so she went in.  She saw Grandma sleeping in the bed with the covers pulled high over her face, and her nightcap pulled low over her forehead.
+Little Red Riding Hood found the door to Grandma's house unlocked, so she went in.  She saw Grandma sleeping in the bed with the covers pulled high over her face, and her nightcap pulled low over her forehead.
 
-But she looked a little different than usual.  Little Red Ridding Hood did not know that the wolf had ran to Grandma's house before her, and eaten Grandma up, and was now lying in her bed pretending to be Grandma!
+But she looked a little different than usual.  Little Red Riding Hood did not know that the wolf had ran to Grandma's house before her, and eaten Grandma up, and was now lying in her bed pretending to be Grandma!
 
 "Grandma, what big eyes you have."
 
