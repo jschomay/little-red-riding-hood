@@ -22,7 +22,7 @@ var commonConfig = {
   images: {
     assetsPath: path.resolve(__dirname, 'src/img/'),
     rewritePath: "img/",
-    ignore: [],
+    ignore: [".DS_Store"],
   },
 
   resolve: {
