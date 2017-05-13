@@ -145,7 +145,6 @@ body {
   background-size: contain;
   position: absolute;
   cursor: pointer;
-  border: 1px solid rgba(222,122,122,0.5);
 }
 
 .story {
