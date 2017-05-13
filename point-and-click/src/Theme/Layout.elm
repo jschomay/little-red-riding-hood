@@ -19,6 +19,7 @@ view :
     , ending : Maybe String
     , story : String
     , engineModel : Engine.Model
+    , temptWolf : Int
     }
     -> Html Msg
 view displayState =
@@ -80,7 +81,13 @@ view displayState =
             [ Html.Keyed.node "div" [] [ ( displayState.story, Markdown.toHtml [ class "story" ] displayState.story ) ] ]
     in
         div [ class "container" ] <|
-            [ div [ class <| "game game--" ++ (getStyle displayState.currentLocation |> fromConditional |> Maybe.withDefault "default") ] <|
+            [ div
+                [ class <|
+                    "game game--"
+                        ++ (getStyle displayState.currentLocation |> fromConditional |> Maybe.withDefault "default")
+                        ++ (" tempt-wolf-" ++ toString displayState.temptWolf)
+                ]
+              <|
                 []
                     ++ background
                     ++ sprites

@@ -84,6 +84,45 @@
   }
 }
 
+.tempt-wolf-1 .lrrh-grandmas-house {
+  animation-duration: 2s;
+  animation-name: lrrh-tempt-wolf-1;
+  animation-fill-mode: forwards;
+}
+@keyframes lrrh-tempt-wolf-1 {
+  to {
+    left: 80px;
+  }
+}
+
+.tempt-wolf-2 .lrrh-grandmas-house {
+  animation-duration: 2s;
+  animation-name: lrrh-tempt-wolf-2;
+  animation-fill-mode: forwards;
+}
+@keyframes lrrh-tempt-wolf-2 {
+  from {
+    left: 80px;
+  }
+  to {
+    left: 0px;
+  }
+}
+.tempt-wolf-3 .lrrh-grandmas-house {
+  animation-duration: 0.3s;
+  animation-name: lrrh-tempt-wolf-3;
+  animation-fill-mode: forwards;
+}
+@keyframes lrrh-tempt-wolf-3 {
+  from {
+    left: 0px;
+  }
+  to {
+    left: -200px;
+  }
+}
+
+
 .wolf-approach {
   animation-duration: 3s;
   animation-name: wolf-approach;
@@ -104,5 +143,19 @@
 @keyframes wolf-retreat {
   to {
     left: 960px;
+  }
+}
+
+.wolf-attack {
+  animation-duration: 0.4s;
+  animation-name: wolf-attack;
+  animation-fill-mode: forwards;
+}
+@keyframes wolf-attack {
+  from {
+    top: 0;
+  }
+  to {
+    left: -300px;
   }
 }

@@ -162,7 +162,7 @@ update msg model =
 
                     checkEnd =
                         if newTemptWolf == 3 then
-                            Engine.changeWorld [ endStory "The End" ]
+                            Engine.changeWorld [ endStory "The End", loadScene "bye bye Little Red Ridding Hood" ]
                         else
                             identity
                 in
@@ -238,6 +238,7 @@ view model =
             , story =
                 List.head model.storyLine |> Maybe.withDefault ""
             , engineModel = model.engineModel
+            , temptWolf = model.temptWolf
             }
     in
         if not model.loaded then

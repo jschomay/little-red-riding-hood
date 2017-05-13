@@ -134,17 +134,21 @@ characters =
         |> addStyle
             [ { conditions = [ currentLocationIs "Woods", currentSceneIs "Wolf!" ], value = "wolf-approach" }
             , { conditions = [ currentLocationIs "Woods", currentSceneIs "bye bye Grannie" ], value = "wolf-retreat" }
+            , { conditions = [ currentLocationIs "Grandma's house" ], value = "wolf-as-grandma" }
+            , { conditions = [ currentLocationIs "Grandma's house", currentSceneIs "bye bye Little Red Ridding Hood" ], value = "wolf-attack" }
             ]
         |> addSprite
             [ { conditions = [ currentLocationIs "Woods" ], value = { x = 100, y = 100, z = 1, w = 779, h = 450 } }
             , { conditions = [ currentLocationIs "Woods", currentSceneIs "Wolf!" ], value = { x = 300, y = 120, z = 3, w = 1018, h = 429 } }
             , { conditions = [ currentLocationIs "Woods", currentSceneIs "bye bye Grannie" ], value = { x = 260, y = 120, z = 3, w = 1018, h = 429 } }
             , { conditions = [ currentLocationIs "Grandma's house" ], value = { x = 380, y = 95, z = 1, w = 480, h = 293 } }
+            , { conditions = [ currentLocationIs "Grandma's house", currentSceneIs "bye bye Little Red Ridding Hood" ], value = { x = 100, y = 120, z = 3, w = 1018, h = 429 } }
             ]
         |> addImage
             [ { conditions = [ currentLocationIs "Woods", hasNotPreviouslyInteractedWith "Wolf" ], value = "wolf-hiding.png" }
             , { conditions = [ currentLocationIs "Woods", hasPreviouslyInteractedWith "Wolf" ], value = "wolf.png" }
             , { conditions = [ currentLocationIs "Grandma's house" ], value = "wolf-as-grandma.png" }
+            , { conditions = [ currentLocationIs "Grandma's house", currentSceneIs "bye bye Little Red Ridding Hood" ], value = "wolf.png" }
             ]
     , character "Grandma" "Little Red Ridding Hood's grandmother, who lives alone in a cottage in the woods."
         |> addSprite (noConditionals { x = 520, y = 135, z = 1, w = 280, h = 410 })
