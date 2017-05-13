@@ -17,6 +17,7 @@ type alias Model =
     , loaded : Bool
     , storyLine : List String
     , content : Dict String (Maybe (Zipper String))
+    , temptWolf : Int
     }
 
 
@@ -121,6 +122,7 @@ Once upon a time there was a young girl named Little Red Ridding Hood, because s
 """
                 ]
           , content = pluckContent
+          , temptWolf = 0
           }
         , Cmd.none
         )
@@ -148,11 +150,27 @@ update msg model =
                         maybeMatchedRuleId
                             |> Maybe.map (\id -> Dict.update id updateContent model.content)
                             |> Maybe.withDefault model.content
+
+                    newTemptWolf =
+                        case maybeMatchedRuleId of
+                            -- "what big eyes you have..." rule
+                            Just "rule31" ->
+                                model.temptWolf + 1
+
+                            _ ->
+                                model.temptWolf
+
+                    checkEnd =
+                        if newTemptWolf == 3 then
+                            Engine.changeWorld [ endStory "The End" ]
+                        else
+                            identity
                 in
                     ( { model
-                        | engineModel = newEngineModel
+                        | engineModel = newEngineModel |> checkEnd
                         , storyLine = narrative :: model.storyLine
                         , content = updatedContent
+                        , temptWolf = newTemptWolf
                       }
                     , Cmd.none
                     )

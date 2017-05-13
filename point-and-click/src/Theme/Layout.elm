@@ -79,11 +79,21 @@ view displayState =
         story =
             [ Html.Keyed.node "div" [] [ ( displayState.story, Markdown.toHtml [ class "story" ] displayState.story ) ] ]
     in
-        div [ class "container" ]
+        div [ class "container" ] <|
             [ div [ class <| "game game--" ++ (getStyle displayState.currentLocation |> fromConditional |> Maybe.withDefault "default") ] <|
                 []
                     ++ background
                     ++ sprites
                     ++ foreground
                     ++ story
+                    ++ [ div [ class "vignette" ] [] ]
+                    ++ if displayState.ending /= Nothing then
+                        [ div [ class "ending" ]
+                            [ h2 [] [ text "The End" ]
+                            , p [] [ text "Game by Jeff Schomay" ]
+                            , p [] [ text "Art by Samuel Herb" ]
+                            ]
+                        ]
+                       else
+                        []
             ]
