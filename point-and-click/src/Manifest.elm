@@ -155,10 +155,12 @@ characters =
 locations : List Entity
 locations =
     [ location "Cottage" "The cottage where Little Red Ridding Hood and her mother live."
+        |> addStyle (noConditionals "cottage")
         |> addExits [ ( East, "River" ) ]
         |> addSprite (noConditionals { x = 0, y = 140, z = 1, w = 100, h = 300 })
         |> addBackgroundForeground "cottage.jpg" Nothing
     , location "River" "A river that runs by Little Red Ridding Hood's cottage."
+        |> addStyle (noConditionals "river")
         |> addExits [ ( West, "Cottage" ), ( East, "Woods" ) ]
         |> addImage
             [ { conditions = [ currentLocationIs "Cottage" ]
@@ -175,9 +177,11 @@ locations =
             ]
         |> addBackgroundForeground "river.jpg" Nothing
     , location "Woods" "The forests that surround Little Red Ridding Hood's cottage."
+        |> addStyle (noConditionals "woods")
         |> addSprite (noConditionals { x = 620, y = 30, z = 1, w = 310, h = 420 })
         |> addBackgroundForeground "woods-bg.jpg" (Just "woods-fg.png")
     , location "Grandma's house" "The cabin in the woods where Grandma lives alone."
+        |> addStyle (noConditionals "grandmas-house")
         |> addBackgroundForeground "grandmas-house.jpg" Nothing
         |> addSprite (noConditionals { x = 800, y = 270, z = 1, w = 100, h = 270 })
     ]

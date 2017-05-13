@@ -80,7 +80,7 @@ view displayState =
             [ Html.Keyed.node "div" [] [ ( displayState.story, Markdown.toHtml [ class "story" ] displayState.story ) ] ]
     in
         div [ class "container" ]
-            [ div [ class "game" ] <|
+            [ div [ class <| "game game--" ++ (getStyle displayState.currentLocation |> fromConditional |> Maybe.withDefault "default") ] <|
                 []
                     ++ background
                     ++ sprites

@@ -1,6 +1,56 @@
+/* fixed items */
+
 .tree, .bedpost {
   pointer-events: none;
 }
+
+/* scenes */
+
+.game--cottage {
+  opacity: 1;
+  animation-duration: 2s;
+  animation-name: cottage;
+}
+
+@keyframes cottage {
+  from {
+    opacity: 0
+  }
+}
+.game--river {
+  opacity: 1;
+  animation-duration: 2s;
+  animation-name: river;
+}
+@keyframes river {
+  from {
+    opacity: 0
+  }
+}
+
+.game--woods {
+  opacity: 1;
+  animation-duration: 2s;
+  animation-name: woods;
+}
+@keyframes woods {
+  from {
+    opacity: 0
+  }
+}
+
+.game--grandmas-house {
+  opacity: 1;
+  animation-duration: 2s;
+  animation-name: grandmas-house;
+}
+@keyframes grandmas-house {
+  from {
+    opacity: 0
+  }
+}
+
+/* character animations */
 
 .lrrh-river {
   animation-duration: 8s;
