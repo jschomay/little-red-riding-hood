@@ -320,6 +320,7 @@ Little Red Ridding Hood made her way over the old bridge and ventured into the d
            , interaction = with "Wolf"
            , conditions =
                 [ currentLocationIs "Woods"
+                , hasNotPreviouslyInteractedWith "Wolf"
                 ]
            , changes =
                 [ loadScene "Wolf!" ]
