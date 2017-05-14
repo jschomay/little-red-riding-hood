@@ -8,6 +8,10 @@ import ClientTypes exposing (..)
 import Components exposing (..)
 import Markdown
 import Engine
+import Game.TwoD as Game
+import Game.TwoD.Camera as Camera
+import Game.TwoD.Render as Render exposing (Renderable)
+import Color exposing (..)
 
 
 view :
@@ -19,6 +23,7 @@ view :
     , ending : Maybe String
     , story : String
     , engineModel : Engine.Model
+    , lrrh : LRRH
     }
     -> Html Msg
 view displayState =
@@ -77,12 +82,14 @@ view displayState =
 
         story =
             [ Html.Keyed.node "div" [] [ ( displayState.story, Markdown.toHtml [ class "story" ] displayState.story ) ] ]
+
+        camera =
+            Camera.fixedArea (100) ( 0, 0 )
+
+        lrrh =
+            Render.shape Render.rectangle { color = red, position = ( displayState.lrrh.x, displayState.lrrh.y ), size = ( 1, 1 ) }
     in
         div [ class "container" ]
-            [ div [ class "game" ] <|
-                []
-                    ++ background
-                    ++ sprites
-                    ++ foreground
-                    ++ story
+            [ Game.render { time = 0, size = ( 800, 600 ), camera = camera }
+                [ lrrh ]
             ]

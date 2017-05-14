@@ -55,14 +55,6 @@ body {
   align-items: center;
 }
 
-.game {
-  flex: 0 0 auto;
-  position: relative;
-  height: 670px;
-  width: 1200px;
-  margin: 0;
-}
-
 .background {
   height: 100%;
   width: 100%;
@@ -108,4 +100,8 @@ body {
   to {
     opacity: 1;
   }
+}
+
+canvas {
+  border: 1px solid orange;
 }

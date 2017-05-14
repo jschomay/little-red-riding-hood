@@ -9,6 +9,8 @@ import ClientTypes exposing (..)
 import Components exposing (..)
 import Dict exposing (Dict)
 import List.Zipper as Zipper exposing (Zipper)
+import Keyboard.Extra exposing (Key)
+import AnimationFrame
 
 
 type alias Model =
@@ -16,6 +18,9 @@ type alias Model =
     , loaded : Bool
     , storyLine : List String
     , content : Dict String (Maybe (Zipper String))
+    , time : Float
+    , keys : List Key
+    , lrrh : LRRH
     }
 
 
@@ -119,6 +124,9 @@ One day, her mother said to her, "Little Red Riding Hood, take this basket of fo
 """
                 ]
           , content = pluckContent
+          , time = 0
+          , keys = []
+          , lrrh = LRRH 0 0 0 0
           }
         , Cmd.none
         )
@@ -160,13 +168,62 @@ update msg model =
                 , Cmd.none
                 )
 
+            Tick dt ->
+                ( { model
+                    | time = model.time + dt
+                    , lrrh = tick dt model.keys model.lrrh
+                  }
+                , Cmd.none
+                )
+
+            Keys keyMsg ->
+                ( { model | keys = Keyboard.Extra.update keyMsg model.keys }
+                , Cmd.none
+                )
+
+
+tick : Float -> List Key -> LRRH -> LRRH
+tick dt keys lrrh =
+    let
+        lrrhSpeed =
+          2.5
+
+        toUnitVector { x, y } =
+            if abs x == abs y then
+                { x = toFloat x / (sqrt 2), y = toFloat y / (sqrt 2) }
+            else
+                { x = toFloat x, y = toFloat y }
+
+        multiplyVector scalar { x, y } =
+            { x = x * scalar, y = y * scalar }
+
+        updateSpeed lrrh =
+            Keyboard.Extra.arrows keys
+                |> toUnitVector
+                |> multiplyVector lrrhSpeed
+                |> \{ x, y } -> { lrrh | vx = x, vy = y }
+
+        updatePosition lrrh =
+            { lrrh
+                | x = lrrh.x + dt * lrrh.vx
+                , y = lrrh.y + dt * lrrh.vy
+            }
+    in
+        lrrh
+            |> updateSpeed
+            |> updatePosition
+
 
 port loaded : (Bool -> msg) -> Sub msg
 
 
 subscriptions : Model -> Sub ClientTypes.Msg
 subscriptions model =
-    loaded <| always Loaded
+    Sub.batch
+        [ loaded <| always Loaded
+        , Sub.map Keys Keyboard.Extra.subscriptions
+        , AnimationFrame.diffs ((\dt -> dt / 1000) >> Tick)
+        ]
 
 
 getNarrative : Dict String (Maybe (Zipper String)) -> Maybe String -> Maybe String
@@ -218,6 +275,7 @@ view model =
             , story =
                 List.head model.storyLine |> Maybe.withDefault ""
             , engineModel = model.engineModel
+            , lrrh = model.lrrh
             }
     in
         Theme.Layout.view displayState

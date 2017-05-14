@@ -2,11 +2,22 @@ module ClientTypes exposing (..)
 
 import Dict exposing (Dict)
 import Engine exposing (Condition)
+import Keyboard.Extra
+
+
+type alias LRRH =
+    { x : Float
+    , y : Float
+    , vx : Float
+    , vy : Float
+    }
 
 
 type Msg
     = Interact Id
     | Loaded
+    | Tick Float
+    | Keys Keyboard.Extra.Msg
 
 
 type alias Id =
