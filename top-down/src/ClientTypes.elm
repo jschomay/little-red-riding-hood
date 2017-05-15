@@ -3,6 +3,7 @@ module ClientTypes exposing (..)
 import Dict exposing (Dict)
 import Engine exposing (Condition)
 import Keyboard.Extra
+import Game.Resources as Resources exposing (Resources)
 
 
 type alias LRRH =
@@ -18,6 +19,7 @@ type Msg
     | Loaded
     | Tick Float
     | Keys Keyboard.Extra.Msg
+    | Resources Resources.Msg
 
 
 type alias Id =

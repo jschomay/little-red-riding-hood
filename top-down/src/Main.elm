@@ -11,6 +11,7 @@ import Dict exposing (Dict)
 import List.Zipper as Zipper exposing (Zipper)
 import Keyboard.Extra exposing (Key)
 import AnimationFrame
+import Game.Resources as Resources exposing (Resources)
 
 
 type alias Model =
@@ -21,6 +22,7 @@ type alias Model =
     , time : Float
     , keys : List Key
     , lrrh : LRRH
+    , resources : Resources
     }
 
 
@@ -127,8 +129,12 @@ One day, her mother said to her, "Little Red Riding Hood, take this basket of fo
           , time = 0
           , keys = []
           , lrrh = LRRH 0 0 0 0
+          , resources = Resources.init
           }
-        , Cmd.none
+        , Cmd.map Resources <|
+            Resources.loadTextures
+                [ "img/sprites.png"
+                ]
         )
 
 
@@ -176,6 +182,11 @@ update msg model =
                 , Cmd.none
                 )
 
+            Resources msg ->
+                ( { model | resources = Resources.update msg model.resources }
+                , Cmd.none
+                )
+
             Keys keyMsg ->
                 ( { model | keys = Keyboard.Extra.update keyMsg model.keys }
                 , Cmd.none
@@ -186,7 +197,7 @@ tick : Float -> List Key -> LRRH -> LRRH
 tick dt keys lrrh =
     let
         lrrhSpeed =
-          2.5
+            2.2
 
         toUnitVector { x, y } =
             if abs x == abs y then
@@ -276,6 +287,8 @@ view model =
                 List.head model.storyLine |> Maybe.withDefault ""
             , engineModel = model.engineModel
             , lrrh = model.lrrh
+            , resources = model.resources
+            , time = model.time
             }
     in
         Theme.Layout.view displayState

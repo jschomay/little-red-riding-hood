@@ -11,7 +11,7 @@ import Engine
 import Game.TwoD as Game
 import Game.TwoD.Camera as Camera
 import Game.TwoD.Render as Render exposing (Renderable)
-import Color exposing (..)
+import Game.Resources as Resources exposing (Resources)
 
 
 view :
@@ -24,6 +24,8 @@ view :
     , story : String
     , engineModel : Engine.Model
     , lrrh : LRRH
+    , resources : Resources
+    , time : Float
     }
     -> Html Msg
 view displayState =
@@ -87,9 +89,49 @@ view displayState =
             Camera.fixedArea (100) ( 0, 0 )
 
         lrrh =
-            Render.shape Render.rectangle { color = red, position = ( displayState.lrrh.x, displayState.lrrh.y ), size = ( 1, 1 ) }
+            let
+                rowHeight =
+                    0.186
+
+                columnWidth =
+                    0.55
+
+                walking row =
+                    Render.animatedSprite
+                        { texture = Resources.getTexture "img/sprites.png" displayState.resources
+                        , position = ( displayState.lrrh.x, displayState.lrrh.y )
+                        , size = ( 1, 1 )
+                        , bottomLeft = ( 0, rowHeight * row )
+                        , topRight = ( columnWidth, rowHeight * (row + 1) )
+                        , numberOfFrames = 3
+                        , duration = 0.5
+                        }
+
+                idle =
+                    Render.manuallyManagedAnimatedSpriteWithOptions
+                        { texture = Resources.getTexture "img/sprites.png" displayState.resources
+                        , position = ( displayState.lrrh.x, displayState.lrrh.y, 0 )
+                        , size = ( 1, 1 )
+                        , bottomLeft = ( 0, rowHeight * 3 )
+                        , topRight = ( columnWidth, rowHeight * 4 )
+                        , numberOfFrames = 3
+                        , pivot = ( 0, 0 )
+                        , rotation = 0
+                        , currentFrame = 1
+                        }
+            in
+                if displayState.lrrh.vx > 0 then
+                    walking 1
+                else if displayState.lrrh.vx < 0 then
+                    walking 2
+                else if displayState.lrrh.vy > 0 then
+                    walking 0
+                else if displayState.lrrh.vy < 0 then
+                    walking 3
+                else
+                    idle
     in
         div [ class "container" ]
-            [ Game.render { time = 0, size = ( 800, 600 ), camera = camera }
+            [ Game.render { time = displayState.time, size = ( 800, 600 ), camera = camera }
                 [ lrrh ]
             ]
