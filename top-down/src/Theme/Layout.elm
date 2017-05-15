@@ -3,7 +3,6 @@ module Theme.Layout exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Keyed
-import Html.Events exposing (..)
 import ClientTypes exposing (..)
 import Components exposing (..)
 import Markdown
@@ -30,58 +29,6 @@ view :
     -> Html Msg
 view displayState =
     let
-        ( bg, fg ) =
-            getBackgroundForeground displayState.currentLocation
-
-        backGroundImage bg =
-            style [ ( "backgroundImage", "url(img/" ++ bg ++ ")" ) ]
-
-        sizeAttrs x y w h =
-            style
-                [ ( "left", toString x ++ "px" )
-                , ( "top", toString y ++ "px" )
-                , ( "width", toString w ++ "px" )
-                , ( "height", toString h ++ "px" )
-                ]
-
-        background =
-            [ div [ class "background", backGroundImage bg ] [] ]
-
-        fromConditional =
-            Maybe.andThen (Engine.chooseFrom displayState.engineModel >> Maybe.map .value)
-
-        sprites =
-            displayState.charactersInCurrentLocation
-                ++ displayState.itemsInCurrentLocation
-                ++ List.map Tuple.second displayState.exits
-                |> List.filterMap
-                    (\entity ->
-                        getSprite entity
-                            |> fromConditional
-                            |> Maybe.map
-                                (\{ x, y, w, h } ->
-                                    div
-                                        (List.filterMap identity
-                                            [ Just <| class "sprite"
-                                            , Just <| sizeAttrs x y w h
-                                            , Just <| onClick <| Interact entity.id
-                                            , getImage entity
-                                                |> fromConditional
-                                                |> Maybe.map backGroundImage
-                                            ]
-                                        )
-                                        []
-                                )
-                    )
-
-        foreground =
-            Maybe.map
-                (\fg ->
-                    [ div [ class <| "foreground", backGroundImage fg ] [] ]
-                )
-                fg
-                |> Maybe.withDefault []
-
         story =
             [ Html.Keyed.node "div" [] [ ( displayState.story, Markdown.toHtml [ class "story" ] displayState.story ) ] ]
 
@@ -130,8 +77,17 @@ view displayState =
                     walking 3
                 else
                     idle
+
+        background =
+            Render.sprite
+                { texture = Resources.getTexture "img/cottage.png" displayState.resources
+                , position = ( -4, -4 )
+                , size = ( 10, 10 )
+                }
     in
         div [ class "container" ]
             [ Game.render { time = displayState.time, size = ( 800, 600 ), camera = camera }
-                [ lrrh ]
+                [ background
+                , lrrh
+                ]
             ]

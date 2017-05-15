@@ -134,6 +134,7 @@ One day, her mother said to her, "Little Red Riding Hood, take this basket of fo
         , Cmd.map Resources <|
             Resources.loadTextures
                 [ "img/sprites.png"
+                , "img/cottage.png"
                 ]
         )
 
