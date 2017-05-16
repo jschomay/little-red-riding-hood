@@ -79,15 +79,29 @@ view displayState =
                     idle
 
         background =
-            Render.sprite
-                { texture = Resources.getTexture "img/cottage.png" displayState.resources
-                , position = ( -4, -4 )
-                , size = ( 10, 10 )
-                }
+            getSprite displayState.currentLocation |> toRenderable
+
+        sprites =
+            displayState.charactersInCurrentLocation |> List.map (getSprite >> toRenderable)
+
+        toRenderable =
+            Maybe.map
+                (\bg ->
+                    Render.animatedSprite
+                        { texture = Resources.getTexture bg.texture displayState.resources
+                        , position = bg.position
+                        , size = bg.size
+                        , bottomLeft = bg.bottomLeft
+                        , topRight = bg.topRight
+                        , numberOfFrames = bg.numberOfFrames
+                        , duration = bg.duration
+                        }
+                )
     in
         div [ class "container" ]
-            [ Game.render { time = displayState.time, size = ( 800, 600 ), camera = camera }
-                [ background
-                , lrrh
-                ]
+            [ Game.render { time = displayState.time, size = ( 800, 600 ), camera = camera } <|
+                List.filterMap identity <|
+                    background
+                        :: Just lrrh
+                        :: sprites
             ]

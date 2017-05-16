@@ -61,11 +61,17 @@ type alias Conditional a =
 
 type Component
     = Display { name : String, description : String }
-    | Style String
     | ConnectedLocations Exits
-    | BackgroundForeground String (Maybe String)
-    | Sprite (Conditional { x : Int, y : Int, w : Int, h : Int })
-    | Image (Conditional String)
+    | Bounds { top : Float, bottom : Float, left : Float, right : Float }
+    | Sprite
+        { texture : String
+        , position : ( Float, Float )
+        , size : ( Float, Float )
+        , bottomLeft : ( Float, Float )
+        , topRight : ( Float, Float )
+        , numberOfFrames : Int
+        , duration : Float
+        }
 
 
 type alias Entity =
