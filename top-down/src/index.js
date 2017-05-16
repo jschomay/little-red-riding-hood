@@ -1,10 +1,10 @@
-require( './Theme/styles/reset.css' );
-require( './Theme/styles/main.css' );
-require( './Theme/styles/story.css' );
-require( './Theme/styles/github-markdown.css' );
+require( './styles/reset.css' );
+require( './styles/main.css' );
+require( './styles/story.css' );
+require( './styles/github-markdown.css' );
 
 // inject bundled Elm app
-var Elm = require( './Main' );
+var Elm = require( './elm//Main' );
 var app = Elm.Main.fullscreen();
 
 
