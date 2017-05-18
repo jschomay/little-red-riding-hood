@@ -19,12 +19,6 @@ var commonConfig = {
     filename: '[hash].js',
   },
 
-  images: {
-    assetsPath: path.resolve(__dirname, 'src/img/'),
-    rewritePath: "img/",
-    ignore: [],
-  },
-
   resolve: {
     modulesDirectories: ['node_modules'],
     extensions:         ['', '.js', '.elm']

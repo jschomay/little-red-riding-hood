@@ -27,7 +27,6 @@
     "html-webpack-plugin": "^2.17.0",
     "json-loader": "^0.5.4",
     "lodash.assign": "^3.2.0",
-    "manifest-loader": "0.0.1",
     "postcss-loader": "^0.9.1",
     "recursive-readdir": "^1.2.1",
     "rimraf": "^2.5.2",

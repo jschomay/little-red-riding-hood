@@ -4,23 +4,15 @@ import Engine exposing (..)
 import Manifest exposing (..)
 import Rules exposing (rulesData)
 import ClientTypes exposing (..)
-import Components exposing (..)
 import Dict exposing (Dict)
 import List.Zipper as Zipper exposing (Zipper)
-import Keyboard.Extra exposing (Key)
-import AnimationFrame
-import Game.Resources as Resources exposing (Resources)
+import Json.Decode exposing (..)
 
 
 type alias Model =
     { engineModel : Engine.Model
-    , loaded : Bool
     , storyLine : List String
     , content : Dict String (Maybe (Zipper String))
-    , time : Float
-    , keys : List Key
-    , lrrh : LRRH
-    , resources : Resources
     }
 
 
@@ -114,7 +106,6 @@ init =
                     }
                     pluckRules
                     |> Engine.changeWorld startingState
-          , loaded = False
           , storyLine =
                 [ """
 Once upon a time there was a young girl named Little Red Riding Hood, because she was so fond of her red cape that her grandma gave to her.
@@ -123,16 +114,8 @@ One day, her mother said to her, "Little Red Riding Hood, take this basket of fo
 """
                 ]
           , content = pluckContent
-          , time = 0
-          , keys = []
-          , lrrh = LRRH 0 0 0 0
-          , resources = Resources.init
           }
-        , Cmd.map Resources <|
-            Resources.loadTextures
-                [ "img/sprites.png"
-                , "img/cottage.png"
-                ]
+        , fromElm "hi from elm"
         )
 
 
@@ -145,6 +128,13 @@ update msg model =
         ( model, Cmd.none )
     else
         case msg of
+            FromJS string ->
+                let
+                    x =
+                        Debug.log "from js" string
+                in
+                    ( model, Cmd.none )
+
             Interact interactableId ->
                 let
                     ( newEngineModel, maybeMatchedRuleId ) =
@@ -152,7 +142,7 @@ update msg model =
 
                     narrative =
                         getNarrative model.content maybeMatchedRuleId
-                            |> Maybe.withDefault (findEntity interactableId |> getDisplay |> .description)
+                            |> Maybe.withDefault ("")
 
                     updatedContent =
                         maybeMatchedRuleId
@@ -167,72 +157,17 @@ update msg model =
                     , Cmd.none
                     )
 
-            Loaded ->
-                ( { model | loaded = True }
-                , Cmd.none
-                )
 
-            Tick dt ->
-                ( { model
-                    | time = model.time + dt
-                    , lrrh = tick dt model.keys model.lrrh
-                  }
-                , Cmd.none
-                )
-
-            Resources msg ->
-                ( { model | resources = Resources.update msg model.resources }
-                , Cmd.none
-                )
-
-            Keys keyMsg ->
-                ( { model | keys = Keyboard.Extra.update keyMsg model.keys }
-                , Cmd.none
-                )
+port toElm : (String -> msg) -> Sub msg
 
 
-tick : Float -> List Key -> LRRH -> LRRH
-tick dt keys lrrh =
-    let
-        lrrhSpeed =
-            2.2
-
-        toUnitVector { x, y } =
-            if abs x == abs y then
-                { x = toFloat x / (sqrt 2), y = toFloat y / (sqrt 2) }
-            else
-                { x = toFloat x, y = toFloat y }
-
-        multiplyVector scalar { x, y } =
-            { x = x * scalar, y = y * scalar }
-
-        updateSpeed lrrh =
-            Keyboard.Extra.arrows keys
-                |> toUnitVector
-                |> multiplyVector lrrhSpeed
-                |> \{ x, y } -> { lrrh | vx = x, vy = y }
-
-        updatePosition lrrh =
-            { lrrh
-                | x = lrrh.x + dt * lrrh.vx
-                , y = lrrh.y + dt * lrrh.vy
-            }
-    in
-        lrrh
-            |> updateSpeed
-            |> updatePosition
-
-
-port loaded : (Bool -> msg) -> Sub msg
+port fromElm : String -> Cmd msg
 
 
 subscriptions : Model -> Sub ClientTypes.Msg
 subscriptions model =
     Sub.batch
-        [ loaded <| always Loaded
-        , Sub.map Keys Keyboard.Extra.subscriptions
-        , AnimationFrame.diffs ((\dt -> dt / 1000) >> Tick)
-        ]
+        [ toElm FromJS ]
 
 
 getNarrative : Dict String (Maybe (Zipper String)) -> Maybe String -> Maybe String

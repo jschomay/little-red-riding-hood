@@ -68,7 +68,7 @@ Play.prototype = {
   },
 
   collect: function(player, collectable) {
-    console.log('yummy!');
+    this.game.toENE('yummy!');
 
     //remove sprite
     collectable.destroy();

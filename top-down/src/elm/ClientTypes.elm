@@ -2,24 +2,11 @@ module ClientTypes exposing (..)
 
 import Dict exposing (Dict)
 import Engine exposing (Condition)
-import Keyboard.Extra
-import Game.Resources as Resources exposing (Resources)
-
-
-type alias LRRH =
-    { x : Float
-    , y : Float
-    , vx : Float
-    , vy : Float
-    }
 
 
 type Msg
     = Interact Id
-    | Loaded
-    | Tick Float
-    | Keys Keyboard.Extra.Msg
-    | Resources Resources.Msg
+    | FromJS String
 
 
 type alias Id =
@@ -60,18 +47,7 @@ type alias Conditional a =
 
 
 type Component
-    = Display { name : String, description : String }
-    | ConnectedLocations Exits
-    | Bounds { top : Float, bottom : Float, left : Float, right : Float }
-    | Sprite
-        { texture : String
-        , position : ( Float, Float )
-        , size : ( Float, Float )
-        , bottomLeft : ( Float, Float )
-        , topRight : ( Float, Float )
-        , numberOfFrames : Int
-        , duration : Float
-        }
+    = None
 
 
 type alias Entity =
