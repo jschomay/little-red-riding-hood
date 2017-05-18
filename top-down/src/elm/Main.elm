@@ -3,8 +3,6 @@ port module Main exposing (..)
 import Engine exposing (..)
 import Manifest exposing (..)
 import Rules exposing (rulesData)
-import Html exposing (..)
-import Theme.Layout
 import ClientTypes exposing (..)
 import Components exposing (..)
 import Dict exposing (Dict)
@@ -28,9 +26,8 @@ type alias Model =
 
 main : Program Never Model ClientTypes.Msg
 main =
-    Html.program
+    Platform.program
         { init = init
-        , view = view
         , update = update
         , subscriptions = subscriptions
         }
@@ -254,42 +251,3 @@ updateContent =
                 |> Maybe.withDefault narration
     in
         (Maybe.map >> Maybe.map) nextOrStay
-
-
-view :
-    Model
-    -> Html ClientTypes.Msg
-view model =
-    let
-        currentLocation =
-            Engine.getCurrentLocation model.engineModel
-                |> findEntity
-
-        displayState =
-            { currentLocation = currentLocation
-            , itemsInCurrentLocation =
-                Engine.getItemsInCurrentLocation model.engineModel
-                    |> List.map findEntity
-            , charactersInCurrentLocation =
-                Engine.getCharactersInCurrentLocation model.engineModel
-                    |> List.map findEntity
-            , exits =
-                getExits currentLocation
-                    |> List.map
-                        (\( direction, id ) ->
-                            ( direction, findEntity id )
-                        )
-            , itemsInInventory =
-                Engine.getItemsInInventory model.engineModel
-                    |> List.map findEntity
-            , ending =
-                Engine.getEnding model.engineModel
-            , story =
-                List.head model.storyLine |> Maybe.withDefault ""
-            , engineModel = model.engineModel
-            , lrrh = model.lrrh
-            , resources = model.resources
-            , time = model.time
-            }
-    in
-        Theme.Layout.view displayState

@@ -3,9 +3,11 @@ require( './styles/main.css' );
 require( './styles/story.css' );
 require( './styles/github-markdown.css' );
 
+var game = require( './phaser/game.js' );
+
 // inject bundled Elm app
-var Elm = require( './elm//Main' );
-var app = Elm.Main.fullscreen();
+var Elm = require( './elm/Main' );
+var app = Elm.Main.worker();
 
 
 // automatically set images to load through webpack manifest loader
