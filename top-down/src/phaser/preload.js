@@ -17,7 +17,7 @@ Preload.prototype = {
     this.load.image('flower', 'img/flower.png');
   },
   create: function() {
-    this.state.start('Play');
+    this.game.loadStory();
   }
 };
 

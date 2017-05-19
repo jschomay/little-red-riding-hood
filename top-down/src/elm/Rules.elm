@@ -187,8 +187,6 @@ Grandma was so happy to see Little Red Riding Hood, and they ate together the go
            , interaction = with "Wolf"
            , conditions =
                 [ currentLocationIs "Woods"
-                , itemIsInInventory "Cape"
-                , itemIsInInventory "Basket of food"
                 , characterIsInLocation "Wolf" "Woods"
                 ]
            , changes =

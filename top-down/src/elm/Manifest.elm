@@ -4,6 +4,16 @@ import ClientTypes exposing (..)
 import Dict exposing (Dict)
 
 
+addComponent : String -> Component -> Entity -> Entity
+addComponent key componentData entity =
+    { entity | components = Dict.insert key componentData entity.components }
+
+
+addExits : List String -> Entity -> Entity
+addExits exits =
+    addComponent "connectedLocations" (ConnectedLocations exits)
+
+
 item : String -> String -> Entity
 item name description =
     { id = name
@@ -23,11 +33,6 @@ character name description =
     { id = name
     , components = Dict.empty
     }
-
-
-noConditionals : a -> Conditional a
-noConditionals a =
-    [ { conditions = [], value = a } ]
 
 
 items : List Entity
@@ -51,5 +56,6 @@ locations =
     [ location "Cottage" "The cottage where Little Red Riding Hood and her mother live."
     , location "River" "A river that runs by Little Red Riding Hood's cottage."
     , location "Woods" "The forests that surround Little Red Riding Hood's cottage."
+        |> addExits [ "Grandma's house" ]
     , location "Grandma's house" "The cabin in the woods where Grandma lives alone."
     ]

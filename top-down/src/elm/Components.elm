@@ -1,8 +1,14 @@
 module Components exposing (..)
 
--- no components in Elm, Tiled app + Phaser.js handle extra entity data
+import ClientTypes exposing (..)
+import Dict
 
 
-none : ()
-none =
-    ()
+getExits : Entity -> Exits
+getExits entity =
+    case Dict.get "connectedLocations" entity.components of
+        Just (ConnectedLocations exits) ->
+            exits
+
+        _ ->
+            []

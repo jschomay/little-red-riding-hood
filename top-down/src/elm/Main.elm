@@ -4,6 +4,7 @@ import Engine exposing (..)
 import Manifest exposing (..)
 import Rules exposing (rulesData)
 import ClientTypes exposing (..)
+import Components exposing (..)
 import Dict exposing (Dict)
 import List.Zipper as Zipper exposing (Zipper)
 import Json.Decode exposing (..)
@@ -11,7 +12,6 @@ import Json.Decode exposing (..)
 
 type alias Model =
     { engineModel : Engine.Model
-    , storyLine : List String
     , content : Dict String (Maybe (Zipper String))
     }
 
@@ -88,14 +88,15 @@ init : ( Model, Cmd ClientTypes.Msg )
 init =
     let
         startingState =
-            [ moveTo "Cottage"
-            , loadScene "start"
+            -- [ moveTo "Cottage"
+            [ loadScene "start"
             , moveItemToLocation "Cape" "Cottage"
             , moveItemToLocation "Basket of food" "Cottage"
             , moveCharacterToLocation "Little Red Riding Hood" "Cottage"
             , moveCharacterToLocation "Mother" "Cottage"
             , moveCharacterToLocation "Wolf" "Woods"
             , moveCharacterToLocation "Grandma" "Grandma's house"
+            , moveTo "Woods"
             ]
     in
         ( { engineModel =
@@ -106,16 +107,15 @@ init =
                     }
                     pluckRules
                     |> Engine.changeWorld startingState
-          , storyLine =
-                [ """
-Once upon a time there was a young girl named Little Red Riding Hood, because she was so fond of her red cape that her grandma gave to her.
-
-One day, her mother said to her, "Little Red Riding Hood, take this basket of food to your Grandma, who lives in the woods, because she is not feeling well.  And remember, don't talk to strangers on the way!"
-"""
-                ]
+                -- , storyLine =
+                --       [ """
+                -- Once upon a time there was a young girl named Little Red Riding Hood, because she was so fond of her red cape that her grandma gave to her.
+                -- One day, her mother said to her, "Little Red Riding Hood, take this basket of food to your Grandma, who lives in the woods, because she is not feeling well.  And remember, don't talk to strangers on the way!"
+                -- """
+                --       ]
           , content = pluckContent
           }
-        , fromElm "hi from elm"
+        , Cmd.none
         )
 
 
@@ -128,12 +128,10 @@ update msg model =
         ( model, Cmd.none )
     else
         case msg of
-            FromJS string ->
-                let
-                    x =
-                        Debug.log "from js" string
-                in
-                    ( model, Cmd.none )
+            Load ->
+                ( model
+                , exportStoryWorld "welcome to lrrh" model.engineModel
+                )
 
             Interact interactableId ->
                 let
@@ -151,23 +149,43 @@ update msg model =
                 in
                     ( { model
                         | engineModel = newEngineModel
-                        , storyLine = narrative :: model.storyLine
                         , content = updatedContent
                       }
-                    , Cmd.none
+                    , exportStoryWorld narrative newEngineModel
                     )
 
 
-port toElm : (String -> msg) -> Sub msg
+exportStoryWorld : String -> Engine.Model -> Cmd Msg
+exportStoryWorld narrative engineModel =
+    let
+        currentLocation =
+            Engine.getCurrentLocation engineModel
+    in
+        storyWorldUpdate <|
+            { currentLocation = currentLocation
+            , narrative = narrative
+            , interactables =
+                Engine.getCharactersInCurrentLocation engineModel
+                    ++ Engine.getItemsInCurrentLocation engineModel
+                    ++ getExits (findEntity currentLocation)
+            }
 
 
-port fromElm : String -> Cmd msg
+port load : (Bool -> msg) -> Sub msg
+
+
+port interact : (String -> msg) -> Sub msg
+
+
+port storyWorldUpdate : StoryWorld -> Cmd msg
 
 
 subscriptions : Model -> Sub ClientTypes.Msg
 subscriptions model =
     Sub.batch
-        [ toElm FromJS ]
+        [ interact Interact
+        , load <| always Load
+        ]
 
 
 getNarrative : Dict String (Maybe (Zipper String)) -> Maybe String -> Maybe String

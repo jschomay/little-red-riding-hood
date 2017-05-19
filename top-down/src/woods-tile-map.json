@@ -24,7 +24,7 @@
         }, 
         {
          "draworder":"topdown",
-         "height":30,
+         "height":0,
          "name":"interact",
          "objects":[
                 {
@@ -46,8 +46,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":128,
-                 "y":318.666666666667
+                 "x":668,
+                 "y":219.667
                 }, 
                 {
                  "gid":38,
@@ -56,11 +56,13 @@
                  "name":"wolf",
                  "properties":
                     {
+                     "eneId":"Wolf",
                      "sprite":"wolf",
                      "type":"wolf"
                     },
                  "propertytypes":
                     {
+                     "eneId":"string",
                      "sprite":"string",
                      "type":"string"
                     },
@@ -69,7 +71,7 @@
                  "visible":true,
                  "width":32,
                  "x":732,
-                 "y":209.333333333333
+                 "y":209.333
                 }, 
                 {
                  "height":172,
@@ -77,18 +79,20 @@
                  "name":"exit to grandmas",
                  "properties":
                     {
+                     "eneId":"Grandma's house",
                      "type":"exit"
                     },
                  "propertytypes":
                     {
+                     "eneId":"string",
                      "type":"string"
                     },
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":162.666666666667,
-                 "x":797.333333333333,
-                 "y":269.333333333333
+                 "width":162.667,
+                 "x":797.333,
+                 "y":269.333
                 }, 
                 {
                  "gid":61,
@@ -110,7 +114,7 @@
                  "visible":true,
                  "width":32,
                  "x":392,
-                 "y":350.666666666667
+                 "y":350.667
                 }, 
                 {
                  "gid":61,
@@ -131,8 +135,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":394.666666666667,
-                 "y":481.333333333333
+                 "x":394.667,
+                 "y":481.333
                 }, 
                 {
                  "gid":37,
@@ -153,8 +157,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":349.333333333333,
-                 "y":453.333333333333
+                 "x":349.333,
+                 "y":453.333
                 }, 
                 {
                  "gid":37,
@@ -175,17 +179,17 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":597.333333333333,
+                 "x":597.333,
                  "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":30,
+         "width":0,
          "x":0,
          "y":0
         }],
- "nextobjectid":12,
+ "nextobjectid":18,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":32,
@@ -193,7 +197,7 @@
         {
          "columns":8,
          "firstgid":1,
-         "image":"light_forest_tileset_0.png",
+         "image":"..\/..\/..\/..\/..\/Desktop\/lrrh\/light_forest_tileset_0.png",
          "imageheight":608,
          "imagewidth":256,
          "margin":0,

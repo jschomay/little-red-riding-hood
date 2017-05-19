@@ -6,7 +6,14 @@ import Engine exposing (Condition)
 
 type Msg
     = Interact Id
-    | FromJS String
+    | Load
+
+
+type alias StoryWorld =
+    { currentLocation : String
+    , narrative : String
+    , interactables : List String
+    }
 
 
 type alias Id =
@@ -36,18 +43,11 @@ type Direction
 
 
 type alias Exits =
-    List ( Direction, String )
-
-
-type alias Conditional a =
-    List
-        { conditions : List Condition
-        , value : a
-        }
+    List String
 
 
 type Component
-    = None
+    = ConnectedLocations Exits
 
 
 type alias Entity =

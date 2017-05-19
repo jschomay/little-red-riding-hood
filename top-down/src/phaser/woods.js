@@ -1,7 +1,6 @@
-//title screen
-var Play = function(){};
+var Woods = function(){};
 
-Play.prototype = {
+Woods.prototype = {
   create: function() {
     this.map = this.game.add.tilemap('woods');
 
@@ -19,16 +18,10 @@ Play.prototype = {
     this.bgLayer.resizeWorld();
 
     this.createItems();
+    this.createInteractables();
 
-    //create wolf
-    var result = findObjectsByType('wolf', this.map, 'interact')
-     
-    //we know there is just one result
-    this.wolf = this.game.add.sprite(result[0].x, result[0].y, 'wolf');
-    this.game.physics.arcade.enable(this.wolf);
-     
     //create player
-    result = findObjectsByType('player', this.map, 'interact')
+    var result = findObjectsByType('player', this.map, 'interact')
      
     //we know there is just one result
     this.player = this.game.add.sprite(result[0].x, result[0].y, 'lrrh');
@@ -40,6 +33,8 @@ Play.prototype = {
      
     //move player with cursor keys
     this.cursors = this.game.input.keyboard.createCursorKeys();
+
+    this.previousInteraction = null;
   },
 
   update: function() {
@@ -64,36 +59,58 @@ Play.prototype = {
     //collision
     this.game.physics.arcade.collide(this.player, this.solidLayer);
     this.game.physics.arcade.overlap(this.player, this.items, this.collect, null, this);
-    // this.game.physics.arcade.overlap(this.player, this.wolf, this.wolf, null, this);
+    this.game.physics.arcade.collide(this.player, this.interactables, this.interact, null, this);
+  },
+  render: function() {
+    this.interactables.forEach(function(x){
+      this.game.debug.body(x);
+    }, this);
   },
 
   collect: function(player, collectable) {
-    this.game.toENE('yummy!');
-
     //remove sprite
     collectable.destroy();
   },
+
+  interact: function(player, interacable) {
+    if(this.previousInteraction !== interacable.eneId) {
+      this.previousInteraction = interacable.eneId;
+      this.game.interactWithStoryWorld(interacable.eneId);
+    };
+  },
+
   createItems: function() {
     //create items
     this.items = this.game.add.group();
     this.items.enableBody = true;
-    var item;    
-    result = findObjectsByType('item', this.map, 'interact');
-    result.forEach(function(element){
+    var results = findObjectsByType('item', this.map, 'interact');
+    results.forEach(function(element){
       createFromTiledObject(element, this.items);
     }, this);
   },
+
+  createInteractables: function() {
+    this.interactables = this.game.add.group();
+    this.interactables.enableBody = true;
+
+    findInteractables(this.map, 'interact').forEach(function(element){
+      if(member(this.game.worldModel.interactables, element.properties.eneId)) {
+        createFromTiledObject(element, this.interactables);
+      }
+    }, this);
+
+    this.interactables.setAll('body.immovable', true);
+  }
 }
 
+function member(group, item) {
+  return group.indexOf(item) >= 0;
+}
 
- //find objects in a Tiled layer that containt a property called "type" equal to a certain value
 function findObjectsByType(type, map, layer) {
   var result = new Array();
   map.objects[layer].forEach(function(element){
     if(element.properties.type === type) {
-      //Phaser uses top left, Tiled bottom left so we have to adjust the y position
-      //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
-      //so they might not be placed in the exact pixel position as in Tiled
       element.y -= map.tileHeight;
       result.push(element);
     }      
@@ -101,14 +118,27 @@ function findObjectsByType(type, map, layer) {
   return result;
 }
 
-//create a sprite from an object
+function findInteractables(map, layer) {
+  var result = new Array();
+  map.objects[layer].forEach(function(element){
+    if(element.properties.eneId) {
+      // element.y -= map.tileHeight;
+      result.push(element);
+    }      
+  });
+  return result;
+}
+
 function createFromTiledObject(element, group) {
   var sprite = group.create(element.x, element.y, element.properties.sprite);
 
-  //copy all properties to the sprite
   Object.keys(element.properties).forEach(function(key){
     sprite[key] = element.properties[key];
   });
+  if(element.properties.type === 'exit') {
+    sprite.body.width = element.width;
+    sprite.body.height = element.height;
+  }
 }
 
-module.exports = Play;
+module.exports = Woods;
