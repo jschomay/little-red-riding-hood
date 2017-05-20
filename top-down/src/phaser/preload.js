@@ -15,6 +15,7 @@ Preload.prototype = {
     this.load.image('lrrh', 'img/lrrh.png');
     this.load.image('wolf', 'img/wolf.png');
     this.load.image('flower', 'img/flower.png');
+    this.load.bitmapFont('font', 'img/font.png', 'img/font.fnt');
   },
   create: function() {
     this.game.loadStory();

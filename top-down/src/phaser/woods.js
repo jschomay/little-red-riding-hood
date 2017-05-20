@@ -20,6 +20,18 @@ Woods.prototype = {
     this.createItems();
     this.createInteractables();
 
+
+    var story = this.game.add.graphics(0, 0);
+    story.beginFill(0x000000, 1);
+    story.drawRect(0, 0, this.game.width, this.game.height / 4);
+    story.fixedToCamera = true;
+
+    this.narrative = this.game.add.bitmapText(10, 10, 'font', this.game.narrative, 12);
+    this.game.cache.getBitmapFont('font').font.lineHeight = 130;
+    this.narrative.maxWidth = this.game.width - 10;
+    story.addChild(this.narrative)
+
+
     //create player
     var result = findObjectsByType('player', this.map, 'interact')
      
@@ -60,6 +72,8 @@ Woods.prototype = {
     this.game.physics.arcade.collide(this.player, this.solidLayer);
     this.game.physics.arcade.overlap(this.player, this.items, this.collect, null, this);
     this.game.physics.arcade.collide(this.player, this.interactables, this.interact, null, this);
+
+    this.narrative.setText(this.game.narrative);
   },
   render: function() {
     this.interactables.forEach(function(x){

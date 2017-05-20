@@ -43,7 +43,7 @@ function updateWorld(newWorld) {
       });
     }
 
-    console.log(newWorld.narrative)
+    this.narrative = newWorld.narrative;
 }
 
 function member(group, item) {
