@@ -26,7 +26,7 @@ Woods.prototype = {
     story.drawRect(0, 0, this.game.width, this.game.height / 4);
     story.fixedToCamera = true;
 
-    this.narrative = this.game.add.bitmapText(10, 10, 'font', this.game.narrative, 12);
+    this.narrative = this.game.add.bitmapText(10, 10, 'font', this.game.worldModel.narrative, 12);
     this.game.cache.getBitmapFont('font').font.lineHeight = 130;
     this.narrative.maxWidth = this.game.width - 10;
     story.addChild(this.narrative)
@@ -47,6 +47,9 @@ Woods.prototype = {
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
     this.previousInteraction = null;
+
+    // listen to updates from ene
+    this.game.storyWorldUpdates.add(updateWorld, this);
   },
 
   update: function() {
@@ -72,9 +75,8 @@ Woods.prototype = {
     this.game.physics.arcade.collide(this.player, this.solidLayer);
     this.game.physics.arcade.overlap(this.player, this.items, this.collect, null, this);
     this.game.physics.arcade.collide(this.player, this.interactables, this.interact, null, this);
-
-    this.narrative.setText(this.game.narrative);
   },
+
   render: function() {
     this.interactables.forEach(function(x){
       this.game.debug.body(x);
@@ -117,10 +119,6 @@ Woods.prototype = {
   }
 }
 
-function member(group, item) {
-  return group.indexOf(item) >= 0;
-}
-
 function findObjectsByType(type, map, layer) {
   var result = new Array();
   map.objects[layer].forEach(function(element){
@@ -155,4 +153,36 @@ function createFromTiledObject(element, group) {
   }
 }
 
+function updateWorld(newWorld) {
+    this.game.worldModel = newWorld;
+
+    // load new scene?
+    if (this.state.current !== newWorld.currentLocation) {
+      this.state.start(newWorld.currentLocation);
+    } else {
+      // update story text
+      this.narrative.setText(this.game.worldModel.narrative);
+
+      // remove departed interacables
+      this.interactables.forEach(function(interactable){
+        if(!member(newWorld.interactables, interactable.eneId)) {
+          interactable.destroy();
+        }
+      });
+
+      // add arrived interactables
+      newWorld.interactables.forEach(function(interactable) {
+        if(this.interactables.filter(function(item){
+          return item.eneId === interactable
+        }, true).total) {
+          // TODO create interactable
+          // not needed for current story
+        }
+      }, this);
+    }
+}
+
+function member(group, item) {
+  return group.indexOf(item) >= 0;
+}
 module.exports = Woods;

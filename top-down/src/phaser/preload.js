@@ -18,9 +18,14 @@ Preload.prototype = {
     this.load.bitmapFont('font', 'img/font.png', 'img/font.fnt');
   },
   create: function() {
+    this.game.storyWorldUpdates.addOnce(start, this);
     this.game.loadStory();
   }
 };
 
+function start(newWorld) {
+  this.game.worldModel = newWorld
+  this.state.start(newWorld.currentLocation);
+}
 
 module.exports = Preload;

@@ -1,4 +1,4 @@
-module.exports = function(loadStory, interactWithStoryWorld, storyWorldUpdate){
+module.exports = function(loadStory, interactWithStoryWorld, storyWorldUpdates){
   var boot = require('./boot');
   var preload = require('./preload');
   var woods = require('./woods');
@@ -7,7 +7,9 @@ module.exports = function(loadStory, interactWithStoryWorld, storyWorldUpdate){
   var game = new Phaser.Game(400, 300, Phaser.AUTO, '');
   game.loadStory = function(){loadStory(true)};
   game.interactWithStoryWorld = interactWithStoryWorld;
-  storyWorldUpdate(updateWorld.bind(game));
+  game.storyWorldUpdates = new Phaser.Signal();
+  // turn elm messages into phaser signals
+  storyWorldUpdates(function(x){ game.storyWorldUpdates.dispatch(x) });
 
   game.state.add('Boot', boot);
   game.state.add('Preload', preload);
@@ -16,36 +18,3 @@ module.exports = function(loadStory, interactWithStoryWorld, storyWorldUpdate){
   game.state.start('Boot');
 }
 
-function updateWorld(newWorld) {
-    this.worldModel = newWorld;
-
-    // load scene?
-    if (this.state.current !== newWorld.currentLocation) {
-      this.state.start(newWorld.currentLocation);
-    } else {
-      var currentInteractables = this.state.states[this.state.current].interactables;
-
-      // remove departed interacables
-      currentInteractables.forEach(function(interactable){
-        if(!member(newWorld.interactables, interactable.eneId)) {
-          interactable.destroy();
-        }
-      });
-
-      // add arrived interactables
-      newWorld.interactables.forEach(function(interactable) {
-        if(currentInteractables.filter(function(item){
-          return item.eneId === interactable
-        }, true).total) {
-          // TODO create interactable
-          // not needed for current story
-        }
-      });
-    }
-
-    this.narrative = newWorld.narrative;
-}
-
-function member(group, item) {
-  return group.indexOf(item) >= 0;
-}
