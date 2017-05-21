@@ -14,7 +14,9 @@ Preload.prototype = {
     this.load.tilemap('woods', 'woods-tile-map.json', null, Phaser.Tilemap.TILED_JSON);
 
     this.load.image('cottage-tileset', 'img/cottage-tileset.png');
-    this.load.image('forest-tileset', 'img/forest-tileset.png');
+    this.load.image('woods-terrain', 'img/woods-terrain.png');
+    this.load.image('woods-water', 'img/woods-water.png');
+    this.load.image('woods-features', 'img/woods-features.png');
     this.load.image('lrrh', 'img/lrrh.png');
     this.load.image('mother', 'img/mother.png');
     this.load.image('basket', 'img/basket.png');

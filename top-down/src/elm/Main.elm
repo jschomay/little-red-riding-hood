@@ -89,7 +89,9 @@ init =
     let
         startingState =
             [ moveTo "Cottage"
+              -- [ moveTo "Woods"
             , moveItemToLocation "Basket of food" "Cottage"
+            , moveItemToLocationFixed "Bridge" "Woods"
             , moveCharacterToLocation "Little Red Riding Hood" "Cottage"
             , moveCharacterToLocation "Mother" "Cottage"
             , moveCharacterToLocation "Wolf" "Woods"

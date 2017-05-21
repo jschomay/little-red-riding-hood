@@ -100,48 +100,40 @@ rulesData =
 """
                 ]
            }
-        -------------------
-        ::
-            { summary = "going back to the Cottage"
-            , interaction = with "Cottage"
-            , conditions =
-                [ currentLocationIsNot "Cottage"
-                ]
-            , changes =
-                []
-            , narrative =
-                [ """
-Little Red Riding Hood knew that her mother would be cross if she did not bring the basket of food to Grandma.
-"""
-                ]
-            }
-        :: { summary = "leaving the Cottage"
-           , interaction = with "River"
+        :: { summary = "going back to the Cottage"
+           , interaction = with "Cottage"
            , conditions =
-                [ currentLocationIs "Cottage"
-                , itemIsInInventory "Cape"
-                , itemIsInInventory "Basket of food"
-                ]
+                []
            , changes =
-                [ moveTo "River"
-                , moveCharacterToLocation "Little Red Riding Hood" "River"
-                ]
+                []
            , narrative =
-                [ """
-Little Red Riding Hood skipped out of the cottage, singing a happy song and swinging the basket of food by her side.  Soon she arrived at the old bridge that went over the river.  On the other side of the bridge were the woods where Grandma lived.
+                [ """Little Red Riding Hood knew that her mother would be cross if she did not bring the basket of food to Grandma.
 """
                 ]
            }
-        :: { summary = "going from Woods to River"
-           , interaction = with "River"
+        :: { summary = "crossing the bridge"
+           , interaction = with "Bridge"
            , conditions =
+                []
+           , changes =
+                []
+           , narrative =
+                [ """The old bridge separated the cottage from the woods.  Usually, Little Red Ridding Hood's mother forbade her from going across it.
+"""
+                ]
+           }
+        -------------------
+        ::
+            { summary = "going from Woods to River"
+            , interaction = with "River"
+            , conditions =
                 [ currentLocationIs "Woods"
                 , itemIsInInventory "Cape"
                 , itemIsInInventory "Basket of food"
                 ]
-           , changes =
+            , changes =
                 []
-           , narrative =
+            , narrative =
                 [ """
 Grandma's house is the other direction.
 """
@@ -149,7 +141,7 @@ Grandma's house is the other direction.
 The wolf was still there, trying to hide the hungry look in his eye.
 """
                 ]
-           }
+            }
         :: { summary = "entering the Woods"
            , interaction = with "Woods"
            , conditions =

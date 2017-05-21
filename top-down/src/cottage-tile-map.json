@@ -92,7 +92,19 @@
                  "width":32,
                  "x":449,
                  "y":542
-                }, 
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":30,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":30,
+         "name":"zones",
+         "objects":[
                 {
                  "height":67,
                  "id":1,
