@@ -6,22 +6,34 @@ import ClientTypes exposing (..)
 
 rulesData : List (RuleData Engine.Rule)
 rulesData =
-    { summary = "leaving without cape"
+    { summary = "leaving before instructions"
     , interaction = withAnyLocation
     , conditions =
         [ currentLocationIs "Cottage"
-        , itemIsNotInInventory "Cape"
+        , hasNotPreviouslyInteractedWith "Mother"
+        , itemIsNotInInventory "Basket of food"
         ]
     , changes =
         []
     , narrative =
-        [ """
-"Oh Little Red Riding Hood," her mother called out, "don't forget your cape.  It might be cold in the woods."
+        [ """Mother: "Little Red Ridding Hood!  Please come here here, I have something to tell you."
 """
         ]
     }
-        :: { summary = "leaving without basket"
-           , interaction = withAnyLocation
+        :: { summary = "looking at basket before instructions"
+           , interaction = with "Basket of food"
+           , conditions =
+                [ hasNotPreviouslyInteractedWith "Mother"
+                ]
+           , changes =
+                []
+           , narrative =
+                [ """A yummy looking basket of food.
+"""
+                ]
+           }
+        :: { summary = "instructions from mother"
+           , interaction = with "Mother"
            , conditions =
                 [ currentLocationIs "Cottage"
                 , itemIsNotInInventory "Basket of food"
@@ -29,82 +41,80 @@ rulesData =
            , changes =
                 []
            , narrative =
-                [ """
- "Oh Little Red Riding Hood," her mother called out, "don't forget the basket of food to bring to Grandma!"
+                [ """Mother: "I want you to take this basket of food to your Grandma, because she isn't feeling well.  But remember, don't talk to strangers on the way!"
 """
                 ]
            }
-        :: { summary = "describe cottage"
-           , interaction = with "Cottage"
+        :: { summary = "mother hurries you along"
+           , interaction = with "Mother"
            , conditions =
                 [ currentLocationIs "Cottage"
-                ]
-           , changes =
-                []
-           , narrative =
-                [ """
-The cottage where Little Red Riding Hood and her mother live.
-"""
-                ]
-           }
-        :: { summary = "trying to jump directly from Cottage to Grandma's house"
-           , interaction = with "Grandma's house"
-           , conditions =
-                [ currentLocationIs "Cottage"
-                , itemIsInInventory "Cape"
                 , itemIsInInventory "Basket of food"
                 ]
            , changes =
                 []
            , narrative =
-                [ """
-The way to Grandma's house is over the river and through the woods.
+                [ """Mother: "What are you waiting for?  Get a move on!"
 """
                 ]
            }
-        :: { summary = "trying to jump directly from River to Grandma's house"
-           , interaction = with "Grandma's house"
+        :: { summary = "leaving without basket"
+           , interaction = withAnyLocation
            , conditions =
-                [ currentLocationIs "River"
-                , itemIsInInventory "Cape"
-                , itemIsInInventory "Basket of food"
+                [ currentLocationIs "Cottage"
+                , hasPreviouslyInteractedWith "Mother"
+                , itemIsNotInInventory "Basket of food"
                 ]
            , changes =
                 []
            , narrative =
-                [ """
-The way to Grandma's house is through the woods.
+                [ """Mother: "Oh Little Red Riding Hood, don't forget the basket of food to bring to Grandma!"
 """
                 ]
            }
-        :: { summary = "trying to jump directly from Cottage to Woods"
+        :: { summary = "taking the basket of food"
+           , interaction = with "Basket of food"
+           , conditions =
+                [ currentLocationIs "Cottage"
+                , hasPreviouslyInteractedWith "Mother"
+                ]
+           , changes =
+                [ moveItemToInventory "Basket of food" ]
+           , narrative =
+                [ """Little Red Ridding Hood enjoyed visiting her Grandma, and looked forward to seeing her again.
+"""
+                ]
+           }
+        :: { summary = "leaving cottage"
            , interaction = with "Woods"
            , conditions =
                 [ currentLocationIs "Cottage"
-                , itemIsInInventory "Cape"
                 , itemIsInInventory "Basket of food"
                 ]
            , changes =
-                []
+                [ moveTo "Woods"
+                , moveCharacterToLocation "Little Red Ridding Hood" "Woods"
+                ]
            , narrative =
-                [ """
-The woods are on the other side of the river.
+                [ """It was a beautiful day and Little Red Ridding Hood skipped through the grassy meadow on her way to Grandma's house.
 """
                 ]
            }
-        :: { summary = "going back to the Cottage"
-           , interaction = with "Cottage"
-           , conditions =
+        -------------------
+        ::
+            { summary = "going back to the Cottage"
+            , interaction = with "Cottage"
+            , conditions =
                 [ currentLocationIsNot "Cottage"
                 ]
-           , changes =
+            , changes =
                 []
-           , narrative =
+            , narrative =
                 [ """
 Little Red Riding Hood knew that her mother would be cross if she did not bring the basket of food to Grandma.
 """
                 ]
-           }
+            }
         :: { summary = "leaving the Cottage"
            , interaction = with "River"
            , conditions =

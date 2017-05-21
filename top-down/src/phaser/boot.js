@@ -4,11 +4,11 @@ var Boot = function(){};
 Boot.prototype = {
   preload: function() {
     //assets we'll use in the loading screen
-    this.load.image('preloadbar', 'img/sprites.png');
+    this.load.image('preloadbar', 'img/lrrh.png');
   },
   create: function() {
     //loading screen will have a white background
-    this.game.stage.backgroundColor = '#222';
+    this.game.stage.backgroundColor = '#000';
 
     //scaling options
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;

@@ -88,15 +88,12 @@ init : ( Model, Cmd ClientTypes.Msg )
 init =
     let
         startingState =
-            -- [ moveTo "Cottage"
-            [ loadScene "start"
-            , moveItemToLocation "Cape" "Cottage"
+            [ moveTo "Cottage"
             , moveItemToLocation "Basket of food" "Cottage"
             , moveCharacterToLocation "Little Red Riding Hood" "Cottage"
             , moveCharacterToLocation "Mother" "Cottage"
             , moveCharacterToLocation "Wolf" "Woods"
             , moveCharacterToLocation "Grandma" "Grandma's house"
-            , moveTo "Woods"
             ]
     in
         ( { engineModel =
@@ -107,12 +104,6 @@ init =
                     }
                     pluckRules
                     |> Engine.changeWorld startingState
-                -- , storyLine =
-                --       [ """
-                -- Once upon a time there was a young girl named Little Red Riding Hood, because she was so fond of her red cape that her grandma gave to her.
-                -- One day, her mother said to her, "Little Red Riding Hood, take this basket of food to your Grandma, who lives in the woods, because she is not feeling well.  And remember, don't talk to strangers on the way!"
-                -- """
-                --       ]
           , content = pluckContent
           }
         , Cmd.none
@@ -129,9 +120,13 @@ update msg model =
     else
         case msg of
             Load ->
-                ( model
-                , exportStoryWorld "welcome to lrrh" model.engineModel
-                )
+                let
+                    introText =
+                        """Once upon a time, there was a young girl named Little Red Ridding Hood, who lived in a cottage with her mother.  """
+                in
+                    ( model
+                    , exportStoryWorld introText model.engineModel
+                    )
 
             Interact interactableId ->
                 let

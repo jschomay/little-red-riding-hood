@@ -43,21 +43,5 @@ html, body { height: 100%; }
 body {
   margin: 0px;
   padding: 0px;
-  background-color: white;
-  background-color: #222;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.container {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-canvas {
-  border: 1px solid orange;
+  background-color: #000;
 }
