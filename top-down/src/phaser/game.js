@@ -3,6 +3,7 @@ module.exports = function(loadStory, interactWithStoryWorld, storyWorldUpdates){
   var preload = require('./preload');
   var cottage = require('./cottage');
   var woods = require('./woods');
+  var grandmasHouse = require('./grandmas-house');
 
   var game = new Phaser.Game(500, 400, Phaser.AUTO, '');
   game.loadStory = function(){loadStory(true)};
@@ -15,6 +16,7 @@ module.exports = function(loadStory, interactWithStoryWorld, storyWorldUpdates){
   game.state.add('Preload', preload);
   game.state.add('Cottage', cottage);
   game.state.add('Woods', woods);
+  game.state.add('Grandma\'s house', grandmasHouse);
 
   game.state.start('Boot');
 }

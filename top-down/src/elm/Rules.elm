@@ -122,73 +122,45 @@ rulesData =
 """
                 ]
            }
-        -------------------
-        ::
-            { summary = "going from Woods to River"
-            , interaction = with "River"
-            , conditions =
-                [ currentLocationIs "Woods"
-                , itemIsInInventory "Cape"
-                , itemIsInInventory "Basket of food"
-                ]
-            , changes =
+        :: { summary = "entering forest"
+           , interaction = with "Forest"
+           , conditions =
                 []
-            , narrative =
-                [ """
-Grandma's house is the other direction.
-"""
-                , """
-The wolf was still there, trying to hide the hungry look in his eye.
-"""
-                ]
-            }
-        :: { summary = "entering the Woods"
-           , interaction = with "Woods"
-           , conditions =
-                [ currentLocationIs "River"
-                , itemIsInInventory "Cape"
-                , itemIsInInventory "Basket of food"
-                , characterIsInLocation "Wolf" "Woods"
-                ]
            , changes =
-                [ moveTo "Woods"
-                , moveCharacterToLocation "Little Red Riding Hood" "Woods"
-                ]
+                []
            , narrative =
-                [ """
-Little Red Riding Hood followed the path deep into the woods.  Birds chirped in the trees high above, and squirrels scampered up the trunks, looking for nuts.  Little Red Riding Hood loved the woods and all of the animals that lived there.
-
-At first, Little Red Riding Hood did not see the wolf spying on her in the shadows, looking at her basket of food and licking his chops.  He was a crafty wolf, and came up with a plan.
-
-Putting on his best smile, the wolf greeted Little Red Riding Hood.  "Good morning my pretty child.  What a lovely cape you have on.  May I ask, where are you going with that delicious looking basket of food?"
+                [ """The forest was dark and Little Red Ridding Hood felt a little afraid, but continued on bravely.
 """
                 ]
            }
-        :: { summary = "ignoring the wolf"
-           , interaction = with "Grandma's house"
+        :: { summary = "see wolf"
+           , interaction = with "Wolf den"
            , conditions =
-                [ currentLocationIs "Woods"
-                , itemIsInInventory "Cape"
-                , itemIsInInventory "Basket of food"
-                , characterIsInLocation "Wolf" "Woods"
-                ]
+                [ hasNotPreviouslyInteractedWith "Wolf" ]
            , changes =
-                [ moveTo "Grandma's house"
-                , moveCharacterToLocation "Little Red Riding Hood" "Grandma's house"
-                , endStory "The End"
-                ]
+                []
            , narrative =
-                [ """
-Little Red Riding Hood remembered her mother's warning about not talking to strangers, and hurried away to Grandma's house.
-
-Grandma was so happy to see Little Red Riding Hood, and they ate together the goodies she had brought, and everyone lived happily ever after.
+                [ """At first she didn't notice the wolf hiding in the trees.
+Wolf: "Hello little girl.  Won't you come here and tell me where you are going?"
 """
                 ]
            }
-        :: { summary = "talking to the wolf in the Woods"
+        :: { summary = "talking to wolf"
            , interaction = with "Wolf"
            , conditions =
-                [ currentLocationIs "Woods"
+                []
+           , changes =
+                []
+           , narrative =
+                [ """Little Red Ridding Hood: "I'm visiting my Grandma who lives in these woods."
+Wolf: "I see...  How touching.  Better not keep Granny waiting."
+"""
+                ]
+           }
+        :: { summary = "leaving wolf"
+           , interaction = with "Wolf den"
+           , conditions =
+                [ hasPreviouslyInteractedWith "Wolf"
                 , characterIsInLocation "Wolf" "Woods"
                 ]
            , changes =
@@ -196,41 +168,47 @@ Grandma was so happy to see Little Red Riding Hood, and they ate together the go
                 , moveCharacterOffScreen "Grandma"
                 ]
            , narrative =
-                [ """
-Little Red Riding Hood thought the wolf looked so kind and so friendly that she happily told him, "I'm going to visit Grandma, who lives in these woods.  She isn't feeling well, so I am bringing her a basket of food."
-
-The wolf muttered "That's very interesting.  I hope she feels better soon."  Then he made a funny little bow and scampered off down the path.
+                [ """Only then did Little Red Ridding Hood remember her mother's warning about not talking to strangers.  That couldn't have done any harm, could it?
 """
                 ]
            }
-        :: { summary = "finding the wolf at Grandma's house"
+        :: { summary = "return to wolf"
+           , interaction = with "Wolf den"
+           , conditions =
+                [ characterIsInLocation "Wolf" "Grandma's house" ]
+           , changes =
+                []
+           , narrative =
+                [ """Where did the wolf go?
+"""
+                ]
+           }
+        :: { summary = "grandma's house after talking to wolf"
            , interaction = with "Grandma's house"
            , conditions =
-                [ currentLocationIs "Woods"
-                , characterIsInLocation "Wolf" "Grandma's house"
-                ]
+                [ characterIsInLocation "Wolf" "Grandma's house" ]
            , changes =
                 [ moveTo "Grandma's house"
-                , moveCharacterToLocation "Little Red Riding Hood" "Grandma's house"
-                , endStory "The End"
+                , moveCharacterToLocation "Little Red Ridding Hood" "Grandma's house"
                 ]
            , narrative =
-                [ """
-Little Red Riding Hood found the door to Grandma's house unlocked, so she went in.  She saw Grandma sleeping in the bed with the covers pulled high over her face, and her nightcap pulled low over her forehead.
-
-But she looked a little different than usual.  Little Red Riding Hood did not know that the wolf had ran to Grandma's house before her, and eaten Grandma up, and was now lying in her bed pretending to be Grandma!
-
-"Grandma, what big eyes you have."
-
-"The better to see you with, my dear," said the wolf, as softly as he could.
-
-"And Grandma, what big ears you have."
-
-"The better to hear you with, my dear."
-
-"And Grandma, what big teeth you have!"
-
-"The better to gobble you up with!"  And the wolf jumped out of bed and that is exactly what he did.  And that is why we don't talk to strangers.
+                [ """Little Red Ridding Hood: "Grandma, what big eyes you have."
+Wolf: "The better to see you with my dear."
+"""
+                ]
+           }
+        :: { summary = "grandma's house"
+           , interaction = with "Grandma's house"
+           , conditions =
+                [ characterIsInLocation "Grandma" "Grandma's house" ]
+           , changes =
+                [ moveTo "Grandma's house"
+                , moveCharacterToLocation "Little Red Ridding Hood" "Grandma's house"
+                , endStory "happy"
+                ]
+           , narrative =
+                [ """Little Red Ridding Hood arrived safely at Grandma's house.  Grandma was happy to see her, and they ate all the food.
+-- The End
 """
                 ]
            }

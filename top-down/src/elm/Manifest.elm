@@ -39,6 +39,8 @@ items : List Entity
 items =
     [ item "Basket of food"
     , item "Bridge"
+    , item "Forest"
+    , item "Wolf den"
     ]
 
 

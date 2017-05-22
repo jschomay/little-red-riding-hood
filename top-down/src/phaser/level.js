@@ -7,11 +7,13 @@ Level.prototype = {
 
     this.interactables = this.game.add.group();
     this.interactables.enableBody = true;
+    this.interactables.name = 'interactables';
     this.addInteractables();
     this.interactables.setAll('body.immovable', true);
 
     this.zones = this.game.add.group();
     this.zones.enableBody = true;
+    this.zones.name = 'zones';
     this.addZones();
     this.zones.setAll('body.immovable', true);
 
@@ -69,7 +71,10 @@ Level.prototype = {
     // this.interactables.forEach(function(x){
     //   this.game.debug.body(x);
     // }, this);
-      // this.game.debug.body(this.player);
+    // this.zones.forEach(function(x){
+    //   this.game.debug.body(x);
+    // }, this);
+    // this.game.debug.body(this.player);
   },
 
   interact: function(player, interacable) {
@@ -123,7 +128,7 @@ function createFromTiledObject(element, group) {
   Object.keys(element.properties).forEach(function(key){
     sprite[key] = element.properties[key];
   });
-  if(element.properties.type === 'zone') {
+  if(group.name === 'zones') {
     sprite.body.width = element.width;
     sprite.body.height = element.height;
   } else {
@@ -144,20 +149,26 @@ function updateWorld(newWorld) {
       // update story text
       this.narrative.setText(this.game.worldModel.narrative);
 
-      // remove departed interacables
+      // remove departed interacables and zones
       this.interactables.forEach(function(interactable){
         if(!member(newWorld.interactables, interactable.eneId)) {
           interactable.destroy();
         }
       });
+      this.zones.forEach(function(zone){
+        if(!member(newWorld.interactables, zone.eneId)) {
+          zone.destroy();
+        }
+      });
 
-      // add arrived interactables
+      // add arrived interactables and zones
       newWorld.interactables.forEach(function(interactable) {
         if(this.interactables.filter(function(item){
           return item.eneId === interactable
         }, true).total) {
           // TODO create interactable
-          // not needed for current story
+          // Also do for zones
+          // Not needed for current story
         }
       }, this);
     }
