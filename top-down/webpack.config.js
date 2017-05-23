@@ -119,6 +119,13 @@ if ( TARGET_ENV === 'production' ) {
           to:   'img/'
         },
         {
+          from: 'src/phaser.js',
+        },
+        {
+          from: 'src/tilemaps/',
+          to:   'tilemaps/'
+        },
+        {
           from: 'src/favicon.ico'
         },
       ]),

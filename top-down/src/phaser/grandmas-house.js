@@ -6,7 +6,7 @@ GrandmasHouse.prototype.constructor = Cottage;
 GrandmasHouse.prototype.setUpMap = setUpMap;
 
 function setUpMap() {
-  this.map = this.game.add.tilemap('cottage');
+  this.map = this.game.add.tilemap('grandmas-house');
   this.map.addTilesetImage('cottage', 'cottage-tileset');
 
   this.bgLayer = this.map.createLayer('bg');

@@ -41,6 +41,8 @@ items =
     , item "Bridge"
     , item "Forest"
     , item "Wolf den"
+    , item "Ears"
+    , item "Teeth"
     ]
 
 

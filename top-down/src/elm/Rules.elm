@@ -165,6 +165,8 @@ Wolf: "I see...  How touching.  Better not keep Granny waiting."
                 ]
            , changes =
                 [ moveCharacterToLocation "Wolf" "Grandma's house"
+                , moveItemToLocationFixed "Ears" "Grandma's house"
+                , moveItemToLocationFixed "Teeth" "Grandma's house"
                 , moveCharacterOffScreen "Grandma"
                 ]
            , narrative =
@@ -192,8 +194,46 @@ Wolf: "I see...  How touching.  Better not keep Granny waiting."
                 , moveCharacterToLocation "Little Red Ridding Hood" "Grandma's house"
                 ]
            , narrative =
-                [ """Little Red Ridding Hood: "Grandma, what big eyes you have."
-Wolf: "The better to see you with my dear."
+                [ """Something seemed different about Grandma.
+Little Red Ridding Hood: "Grandma, what big eyes you have."
+Wolf: "The better to see you with."
+"""
+                ]
+           }
+        :: { summary = "what big ears you have"
+           , interaction = with "Ears"
+           , conditions =
+                [ characterIsInLocation "Wolf" "Grandma's house" ]
+           , changes =
+                [ moveItemOffScreen "Ears" ]
+           , narrative =
+                [ """Little Red Ridding Hood: "And Grandma, what big ears you have."
+Wolf: "The better to hear you with my dear."
+"""
+                ]
+           }
+        :: { summary = "what big teeth"
+           , interaction = with "Teeth"
+           , conditions =
+                [ characterIsInLocation "Wolf" "Grandma's house" ]
+           , changes =
+                [ moveItemOffScreen "Teeth" ]
+           , narrative =
+                [ """Little Red Ridding Hood: "And Grandma, what big teeth you have!"
+Wolf: "The better to gobble you up with!"
+And that is exactly what he did.
+"""
+                ]
+           }
+        :: { summary = "wolf in grandmas house"
+           , interaction = with "Wolf"
+           , conditions =
+                [ currentLocationIs "Grandma's house"
+                ]
+           , changes =
+                []
+           , narrative =
+                [ """-- The End
 """
                 ]
            }

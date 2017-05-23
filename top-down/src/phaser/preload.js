@@ -10,8 +10,9 @@ Preload.prototype = {
     this.load.setPreloadSprite(this.preloadBar);
 
     //load game assets
-    this.load.tilemap('cottage', 'cottage-tile-map.json', null, Phaser.Tilemap.TILED_JSON);
-    this.load.tilemap('woods', 'woods-tile-map.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('cottage', 'tilemaps/cottage.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('woods', 'tilemaps/woods.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('grandmas-house', 'tilemaps/grandmas-house.json', null, Phaser.Tilemap.TILED_JSON);
 
     this.load.image('cottage-tileset', 'img/cottage-tileset.png');
     this.load.image('woods-terrain', 'img/woods-terrain.png');
@@ -21,7 +22,8 @@ Preload.prototype = {
     this.load.image('mother', 'img/mother.png');
     this.load.image('basket', 'img/basket.png');
     this.load.image('wolf', 'img/wolf.png');
-    this.load.image('flower', 'img/flower.png');
+    this.load.image('grandma', 'img/grandma.png');
+    this.load.image('wolf-grandma', 'img/wolf-grandma.png');
     this.load.bitmapFont('font', 'img/font.png', 'img/font.fnt');
   },
   create: function() {
