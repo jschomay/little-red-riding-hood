@@ -3,24 +3,9 @@ Little Red Ridding Hood sprite:
 https://slimsresources.wordpress.com/tag/little-red-riding-hood/
 
 
-Forest sprites:
-Stephen Challener and the Open Surge team ( http://opensnc.sourceforge.net), hosted by OpenGameArt.org
-https://opengameart.org/content/32x32-and-16x16-rpg-tiles-forest-and-some-interior-tiles
-
-
 Wolf sprites:
 "Redshrike" Challener as graphic artist and William.Thompsonj as contributor
 https://opengameart.org/content/lpc-wolf-animation
-
-
-Outside sprites:
-Buch http://blog-buch.rhcloud.com
-https://opengameart.org/content/orthographic-outdoor-tiles
-
-
-Bridge sprites:
-Stone bridge tiles made by Tuomo Untinen
-https://opengameart.org/content/stone-bridge-tiles-32x32
 
 
 Terrain sprites:
