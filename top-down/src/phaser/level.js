@@ -49,18 +49,23 @@ Level.prototype = {
     this.player.body.velocity.y = 0;
     this.player.body.velocity.x = 0;
  
-    if(this.cursors.up.isDown) {
-      this.player.body.velocity.y -= this.player.speed;
-    }
-    else if(this.cursors.down.isDown) {
-      this.player.body.velocity.y += this.player.speed;
-    }
+    var direction = new Phaser.Point(0, 0);
     if(this.cursors.left.isDown) {
-      this.player.body.velocity.x -= this.player.speed;
+         direction.x = -1;
     }
     else if(this.cursors.right.isDown) {
-      this.player.body.velocity.x += this.player.speed;
+         direction.x = 1;
     }
+    if(this.cursors.up.isDown) {
+         direction.y = -1;
+    }
+    else if(this.cursors.down.isDown) {
+         direction.y = 1;
+    }
+    direction.normalize();
+
+    this.player.body.velocity.x += direction.x * this.player.speed;
+    this.player.body.velocity.y += direction.y * this.player.speed;
 
     //collision
     this.game.physics.arcade.collide(this.player, this.solidLayer);
