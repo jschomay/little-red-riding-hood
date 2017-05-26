@@ -21,6 +21,7 @@ Level.prototype = {
     story.beginFill(0x000000, 1);
     story.drawRect(0, 0, this.game.width, this.game.height / 4);
     story.fixedToCamera = true;
+
     this.narrative = this.game.add.bitmapText(10, 10, 'font', this.game.worldModel.narrative, 12);
     this.game.cache.getBitmapFont('font').font.lineHeight = 130;
     this.narrative.maxWidth = this.game.width - 10;
@@ -148,6 +149,8 @@ function updateWorld(newWorld) {
     } else {
       // update story text
       this.narrative.setText(this.game.worldModel.narrative);
+      this.narrative.alpha = 0.2;
+      var tween = this.game.add.tween(this.narrative).to( { alpha: 1 }, 800, "Linear", true);
 
       // remove departed interacables and zones
       this.interactables.forEach(function(interactable){
