@@ -162,6 +162,7 @@ exportStoryWorld narrative engineModel =
         storyWorldUpdate <|
             { currentLocation = currentLocation
             , narrative = narrative
+            , isEnd = Engine.getEnding engineModel
             , interactables =
                 Engine.getCharactersInCurrentLocation engineModel
                     ++ Engine.getItemsInCurrentLocation engineModel

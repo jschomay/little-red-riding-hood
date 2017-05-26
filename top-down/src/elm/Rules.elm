@@ -217,7 +217,9 @@ Wolf: "The better to hear you with my dear."
            , conditions =
                 [ characterIsInLocation "Wolf" "Grandma's house" ]
            , changes =
-                [ moveItemOffScreen "Teeth" ]
+                [ moveItemOffScreen "Teeth"
+                , endStory "Sad"
+                ]
            , narrative =
                 [ """Little Red Ridding Hood: "And Grandma, what big teeth you have!"
 Wolf: "The better to gobble you up with!"
@@ -233,9 +235,7 @@ And that is exactly what he did.
            , changes =
                 []
            , narrative =
-                [ """-- The End
-"""
-                ]
+                []
            }
         :: { summary = "grandma's house"
            , interaction = with "Grandma's house"
@@ -248,7 +248,6 @@ And that is exactly what he did.
                 ]
            , narrative =
                 [ """Little Red Ridding Hood arrived safely at Grandma's house.  Grandma was happy to see her, and they ate all the food.
--- The End
 """
                 ]
            }

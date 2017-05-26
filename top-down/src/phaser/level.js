@@ -31,6 +31,7 @@ Level.prototype = {
     this.player = this.game.add.sprite(result.x, result.y, 'lrrh');
     this.game.physics.arcade.enable(this.player);
     this.player.body.setSize(25, 38, 6, 8);
+    this.player.speed = 100;
 
     this.game.camera.follow(this.player, 0, 1, 1);
      
@@ -44,22 +45,21 @@ Level.prototype = {
   },
 
   update: function() {
-    var speed = 100;
     //player movement
     this.player.body.velocity.y = 0;
     this.player.body.velocity.x = 0;
  
     if(this.cursors.up.isDown) {
-      this.player.body.velocity.y -= speed;
+      this.player.body.velocity.y -= this.player.speed;
     }
     else if(this.cursors.down.isDown) {
-      this.player.body.velocity.y += speed;
+      this.player.body.velocity.y += this.player.speed;
     }
     if(this.cursors.left.isDown) {
-      this.player.body.velocity.x -= speed;
+      this.player.body.velocity.x -= this.player.speed;
     }
     else if(this.cursors.right.isDown) {
-      this.player.body.velocity.x += speed;
+      this.player.body.velocity.x += this.player.speed;
     }
 
     //collision
@@ -150,7 +150,7 @@ function updateWorld(newWorld) {
       // update story text
       this.narrative.setText(this.game.worldModel.narrative);
       this.narrative.alpha = 0.2;
-      var tween = this.game.add.tween(this.narrative).to( { alpha: 1 }, 800, "Linear", true);
+      this.game.add.tween(this.narrative).to( { alpha: 1 }, 800, "Linear", true);
 
       // remove departed interacables and zones
       this.interactables.forEach(function(interactable){

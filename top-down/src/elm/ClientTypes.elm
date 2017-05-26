@@ -12,6 +12,7 @@ type Msg
 type alias StoryWorld =
     { currentLocation : String
     , narrative : String
+    , isEnd : Maybe String
     , interactables : List String
     }
 
