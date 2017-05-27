@@ -122,6 +122,9 @@ if ( TARGET_ENV === 'production' ) {
           from: 'src/phaser.js',
         },
         {
+          from: 'src/phaser-touch-control.js',
+        },
+        {
           from: 'src/tilemaps/',
           to:   'tilemaps/'
         },

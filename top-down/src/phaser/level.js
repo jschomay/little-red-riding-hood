@@ -42,6 +42,11 @@ Level.prototype = {
      
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
+    this.game.touchControl = this.game.plugins.add(Phaser.Plugin.TouchControl);
+    this.game.touchControl.inputEnable();
+    this.game.touchControl.settings.singleDirection = true;
+    this.game.touchControl.imageGroup.forEach(function(i){i.destroy();});
+
     this.previousInteraction = null;
 
     this.game.storyWorldUpdates.add(updateWorld, this);
@@ -60,18 +65,18 @@ Level.prototype = {
     //player movement
     this.player.body.velocity.y = 0;
     this.player.body.velocity.x = 0;
- 
+
     var direction = new Phaser.Point(0, 0);
-    if(this.cursors.left.isDown) {
+    if(this.cursors.left.isDown || this.game.touchControl.cursors.left) {
          direction.x = -1;
     }
-    else if(this.cursors.right.isDown) {
+    else if(this.cursors.right.isDown || this.game.touchControl.cursors.right) {
          direction.x = 1;
     }
-    if(this.cursors.up.isDown) {
+    if(this.cursors.up.isDown || this.game.touchControl.cursors.up) {
          direction.y = -1;
     }
-    else if(this.cursors.down.isDown) {
+    else if(this.cursors.down.isDown || this.game.touchControl.cursors.down) {
          direction.y = 1;
     }
     direction.normalize();

@@ -25,6 +25,11 @@ Preload.prototype = {
     this.load.image('grandma', 'img/grandma.png');
     this.load.image('wolf-grandma', 'img/wolf-grandma.png');
     this.load.bitmapFont('font', 'img/font.png', 'img/font.fnt');
+
+    // for the touch control plugin; these won't be visible
+    this.load.image('compass', 'img/lrrh.png');
+    this.load.image('touch_segment', 'img/lrrh.png');
+    this.load.image('touch', 'img/lrrh.png');
   },
   create: function() {
     this.game.storyWorldUpdates.addOnce(start, this);
