@@ -36,6 +36,6 @@ function update() {
       var wolf = this.interactables.filter(function(item){
         return item.key === 'wolf-grandma';
       }).first;
-      this.game.add.tween(wolf).to( { x: this.player.body.x + this.player.width, y: this.player.body.y - this.player.height / 2 }, 200, "Linear", true);
+      this.game.add.tween(wolf).to( { x: this.player.body.x + this.player.width / 2, y: this.player.body.y - this.player.height / 2 }, 200, "Linear", true);
       }
 }

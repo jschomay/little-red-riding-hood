@@ -18,7 +18,7 @@ Preload.prototype = {
     this.load.image('woods-terrain', 'img/woods-terrain.png');
     this.load.image('woods-water', 'img/woods-water.png');
     this.load.image('woods-features', 'img/woods-features.png');
-    this.load.image('lrrh', 'img/lrrh.png');
+    this.load.spritesheet('lrrh', 'img/lrrh-walking.png', 48, 48);
     this.load.image('mother', 'img/mother.png');
     this.load.image('basket', 'img/basket.png');
     this.load.image('wolf', 'img/wolf.png');

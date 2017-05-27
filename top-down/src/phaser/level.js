@@ -32,6 +32,11 @@ Level.prototype = {
     this.game.physics.arcade.enable(this.player);
     this.player.body.setSize(25, 38, 6, 8);
     this.player.speed = 100;
+    this.player.frame = 10;
+    this.player.animations.add('left', [6, 7, 8, 7], 8, true);
+    this.player.animations.add('right', [3, 4, 5, 4], 8, true);
+    this.player.animations.add('up', [0, 1, 2, 1], 8, true);
+    this.player.animations.add('down', [9, 10, 11, 10], 8, true);
 
     this.game.camera.follow(this.player, 0, 1, 1);
      
@@ -45,6 +50,13 @@ Level.prototype = {
   },
 
   update: function() {
+    if(this.game.worldModel.isEnd) {
+      this.player.body.velocity.y = 0;
+      this.player.body.velocity.x = 0;
+      this.player.animations.stop();
+      return true;
+    }
+
     //player movement
     this.player.body.velocity.y = 0;
     this.player.body.velocity.x = 0;
@@ -66,6 +78,22 @@ Level.prototype = {
 
     this.player.body.velocity.x += direction.x * this.player.speed;
     this.player.body.velocity.y += direction.y * this.player.speed;
+
+    if(direction.x > 0) {
+         this.player.animations.play('right');
+    }
+    else if(direction.x < 0) {
+         this.player.animations.play('left');
+    }
+    else if(direction.y > 0) {
+         this.player.animations.play('down');
+    }
+    else if(direction.y < 0) {
+         this.player.animations.play('up');
+    }
+    else {
+        this.player.animations.stop();
+    }
 
     //collision
     this.game.physics.arcade.collide(this.player, this.solidLayer);
