@@ -4,17 +4,18 @@ import Engine exposing (..)
 import Manifest exposing (..)
 import Rules exposing (rulesData)
 import Html exposing (..)
-import Html.Attributes exposing (..)
 import Theme.Layout
 import ClientTypes exposing (..)
 import Components exposing (..)
 import Dict exposing (Dict)
 import List.Zipper as Zipper exposing (Zipper)
+import Window
 
 
 type alias Model =
     { engineModel : Engine.Model
     , loaded : Bool
+    , scaleRatio : Float
     , storyLine : List String
     , content : Dict String (Maybe (Zipper String))
     , temptWolf : Int
@@ -116,6 +117,7 @@ init =
                     pluckRules
                     |> Engine.changeWorld startingState
           , loaded = False
+          , scaleRatio = 1
           , storyLine =
                 [ """
 Once upon a time there was a young girl named Little Red Riding Hood, because she was so fond of her red cape that her grandma gave to her.
@@ -124,7 +126,7 @@ Once upon a time there was a young girl named Little Red Riding Hood, because sh
           , content = pluckContent
           , temptWolf = 0
           }
-        , Cmd.none
+        , getGameWidth ()
         )
 
 
@@ -180,13 +182,37 @@ update msg model =
                 , Cmd.none
                 )
 
+            Resize ->
+                ( model
+                , getGameWidth ()
+                )
+
+            GameWidth width ->
+                let
+                    assetBaseSize =
+                        933
+                in
+                    ( { model | scaleRatio = width / assetBaseSize }
+                    , Cmd.none
+                    )
+
 
 port loaded : (Bool -> msg) -> Sub msg
 
 
+port getGameWidth : () -> Cmd msg
+
+
+port gameWidth : (Float -> msg) -> Sub msg
+
+
 subscriptions : Model -> Sub ClientTypes.Msg
 subscriptions model =
-    loaded <| always Loaded
+    Sub.batch
+        [ loaded <| always Loaded
+        , Window.resizes <| always Resize
+        , gameWidth GameWidth
+        ]
 
 
 getNarrative : Dict String (Maybe (Zipper String)) -> Maybe String -> Maybe String
@@ -238,10 +264,9 @@ view model =
             , story =
                 List.head model.storyLine |> Maybe.withDefault ""
             , engineModel = model.engineModel
+            , scaleRatio = model.scaleRatio
+            , loaded = model.loaded
             , temptWolf = model.temptWolf
             }
     in
-        if not model.loaded then
-            div [ class "loading" ] [ span [] [ text "Loading..." ] ]
-        else
-            Theme.Layout.view displayState
+        Theme.Layout.view displayState

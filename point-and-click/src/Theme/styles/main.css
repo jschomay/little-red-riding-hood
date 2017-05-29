@@ -43,56 +43,113 @@ html, body { height: 100%; }
 body {
   margin: 0px;
   padding: 0px;
-  background-color: white;
   background-color: #222;
 }
 
-.loading {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #efd28e;
-  font-size: 2em;
-  font-weight: bold;
+@media (min-width: 125px) {
+  .container {
+    font-size: 9px;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .game {
+    width: 65%;
+  }
+  .story {
+    width: 35%;
+    padding: 2em;
+  }
+}
+
+@media (min-width: 125px) and (orientation: portrait) {
+  .container {
+    font-size: 10px;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .game {
+    width: 100%;
+  }
+  .story {
+    width: 100%;
+    padding: 1em 0;
+  }
+}
+
+
+@media (min-width: 321px)  and (orientation: portrait) {
+  .container {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 540px) and (orientation: landscape) {
+  .container {
+    font-size: 9px;
+  }
+}
+
+@media (min-width: 720px) {
+  .container {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 820px) {
+  .container {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 950px) {
+  .container {
+    font-size: 16px;
+  }
 }
 
 .container {
   height: 100%;
   width: 100%;
+  max-width: 1430px;
+  margin: auto;
   display: flex;
-  justify-content: center;
   align-items: center;
+  padding: 3em;
+  color: #fff8e1;
 }
 
 .game {
-  flex: 0 0 auto;
   position: relative;
-  height: 700px;
-  width: 932px;
-  margin: 0;
   overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.game:before {
+  content: "";
+  float: left;
+  padding-bottom: 75%;
 }
 
 .background {
   height: 100%;
   width: 100%;
-  background-position: top left;
-  background-size: 100%;
-  background-repeat: no-repeat;
-}
-
-.foreground {
-  height: 100%;
-  width: 100%;
-  background-position: top left;
+  background-position: center left;
   background-size: 100%;
   background-repeat: no-repeat;
   position: absolute;
+}
+
+.loading {
+  height: 100%;
+  width: 100%;
+  position: absolute;
   top: 0;
   left: 0;
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 .ending {
@@ -105,14 +162,13 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #eee;
   font-size: 2em;
   font-weight: bold;
   background: rgba(0,0,0,0.7);
   opacity: 0;
   z-index: 9999;
   animation-duration: 5s;
-  animation-delay: 4s;
+  animation-delay: 2s;
   animation-name: ending;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
@@ -140,25 +196,23 @@ body {
 }
 
 .sprite {
+  position: absolute;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
   position: absolute;
   cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .story {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: rgba(53, 33, 0, 0.91);
-  color: #efd28e;
   font-family: Palatino, Georgia, times;
-  font-size: 1.5em;
+  font-size: 1.6em;
   line-height: 1.3em;
-  padding: 1.4em;
   animation: fadeIn 0.7s linear forwards;
   z-index: 99;
+  flex: 0 0 auto;
 }
 
 @keyframes fadeIn {

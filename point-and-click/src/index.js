@@ -7,6 +7,11 @@ require( './Theme/styles/github-markdown.css' );
 var Elm = require( './Main' );
 var app = Elm.Main.fullscreen();
 
+app.ports.getGameWidth.subscribe(function(){
+  var gameWidth = document.querySelector('.game').offsetWidth;
+  app.ports.gameWidth.send(gameWidth);
+});
+
 
 // automatically set images to load through webpack manifest loader
 var imagesToLoad = require("json!manifest?config=images!../preload.json");

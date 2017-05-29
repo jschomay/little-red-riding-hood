@@ -7,6 +7,8 @@ import Engine exposing (Condition)
 type Msg
     = Interact Id
     | Loaded
+    | Resize
+    | GameWidth Float
 
 
 type alias Id =

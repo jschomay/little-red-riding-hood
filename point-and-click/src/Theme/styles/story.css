@@ -58,7 +58,7 @@
 }
 @keyframes lrrh-river {
   from {
-    left: -120px;
+    left: -12%;
   }
 }
 
@@ -68,7 +68,7 @@
 }
 @keyframes lrrh-woods {
   from {
-    left: -20px;
+    left: -2%;
   }
 }
 
@@ -80,7 +80,7 @@
 }
 @keyframes lrrh-retreat {
   to {
-    left: 140px;
+    left: 15%;
   }
 }
 
@@ -91,7 +91,7 @@
 }
 @keyframes lrrh-tempt-wolf-1 {
   to {
-    left: 80px;
+    left: 9%;
   }
 }
 
@@ -102,10 +102,10 @@
 }
 @keyframes lrrh-tempt-wolf-2 {
   from {
-    left: 80px;
+    left: 9%;
   }
   to {
-    left: 0px;
+    left: 5%;
   }
 }
 .tempt-wolf-3 .lrrh-grandmas-house {
@@ -115,10 +115,10 @@
 }
 @keyframes lrrh-tempt-wolf-3 {
   from {
-    left: 0px;
+    left: 5%;
   }
   to {
-    left: -200px;
+    left: -21%;
   }
 }
 
@@ -130,24 +130,28 @@
 }
 @keyframes wolf-approach {
   to {
-    left: 260px;
+    left: 26%
   }
 }
 
 .wolf-retreat {
   animation-duration: 3s;
+  animation-delay: 2s;
   animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19);
   animation-name: wolf-retreat;
   animation-fill-mode: forwards;
 }
 @keyframes wolf-retreat {
+  from {
+    left: 26%;
+  }
   to {
-    left: 960px;
+    left: 102%;
   }
 }
 
 .wolf-attack {
-  animation-duration: 0.4s;
+  animation-duration: 1s;
   animation-name: wolf-attack;
   animation-fill-mode: forwards;
 }
@@ -156,6 +160,6 @@
     top: 0;
   }
   to {
-    left: -300px;
+    left: -110%;
   }
 }

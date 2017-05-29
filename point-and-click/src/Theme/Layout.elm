@@ -19,6 +19,8 @@ view :
     , ending : Maybe String
     , story : String
     , engineModel : Engine.Model
+    , scaleRatio : Float
+    , loaded : Bool
     , temptWolf : Int
     }
     -> Html Msg
@@ -32,10 +34,10 @@ view displayState =
 
         spriteStyle x y z w h =
             style
-                [ ( "left", toString x ++ "px" )
-                , ( "top", toString y ++ "px" )
-                , ( "width", toString w ++ "px" )
-                , ( "height", toString h ++ "px" )
+                [ ( "left", toString (toFloat x * displayState.scaleRatio) ++ "px" )
+                , ( "top", toString (toFloat y * displayState.scaleRatio) ++ "px" )
+                , ( "width", toString (toFloat w * displayState.scaleRatio) ++ "px" )
+                , ( "height", toString (toFloat h * displayState.scaleRatio) ++ "px" )
                 , ( "zIndex", toString z )
                 ]
 
@@ -78,7 +80,7 @@ view displayState =
                 |> Maybe.withDefault []
 
         story =
-            [ Html.Keyed.node "div" [] [ ( displayState.story, Markdown.toHtml [ class "story" ] displayState.story ) ] ]
+            Html.Keyed.node "div" [ class "story" ] [ ( displayState.story, Markdown.toHtml [] displayState.story ) ]
     in
         div [ class "container" ] <|
             [ div
@@ -88,19 +90,25 @@ view displayState =
                         ++ (" tempt-wolf-" ++ toString displayState.temptWolf)
                 ]
               <|
-                []
-                    ++ background
-                    ++ sprites
-                    ++ foreground
-                    ++ story
-                    ++ [ div [ class "vignette" ] [] ]
-                    ++ if displayState.ending /= Nothing then
-                        [ div [ class "ending" ]
-                            [ h2 [] [ text "The End" ]
-                            , p [] [ text "Game by Jeff Schomay" ]
-                            , p [] [ text "Art by Samuel Herb" ]
+                if not displayState.loaded then
+                    [ div [ class "loading" ] [ span [] [ text "Loading..." ] ] ]
+                else
+                    []
+                        ++ background
+                        ++ sprites
+                        ++ foreground
+                        ++ [ div [ class "vignette" ] [] ]
+                        ++ if displayState.ending /= Nothing then
+                            [ div [ class "ending" ]
+                                [ h2 [] [ text "The End" ]
+                                , p [] [ text "Game by Jeff Schomay" ]
+                                , p [] [ text "Art by Samuel Herb" ]
+                                ]
                             ]
-                        ]
-                       else
-                        []
+                           else
+                            []
+            , if displayState.loaded then
+                story
+              else
+                div [ class "story" ] []
             ]
