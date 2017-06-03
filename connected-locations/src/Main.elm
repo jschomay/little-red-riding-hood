@@ -1,134 +1,61 @@
 port module Main exposing (..)
 
 import Engine exposing (..)
-import Manifest exposing (..)
-import Rules exposing (rulesData)
+import Manifest
+import Rules
 import Html exposing (..)
+import Html.Attributes exposing (..)
+import Tuple
 import Theme.Layout
 import ClientTypes exposing (..)
+import Narrative
 import Components exposing (..)
 import Dict exposing (Dict)
 import List.Zipper as Zipper exposing (Zipper)
+
+
+{- This is the kernel of the whole app.  It glues everything together and handles some logic such as choosing the correct narrative to display.
+   You shouldn't need to change anything in this file, unless you want some kind of different behavior.
+-}
 
 
 type alias Model =
     { engineModel : Engine.Model
     , loaded : Bool
     , storyLine : List StorySnippet
-    , content : Dict String (Maybe (Zipper String))
+    , narrativeContent : Dict String (Zipper String)
+    , endingCountDown : Int
     }
-
-
-main : Program Never Model ClientTypes.Msg
-main =
-    Html.program
-        { init = init
-        , view = view
-        , update = update
-        , subscriptions = subscriptions
-        }
-
-
-getIds : List Entity -> List Id
-getIds =
-    List.map .id
-
-
-findEntity : Id -> Entity
-findEntity id =
-    let
-        interactables =
-            items ++ locations ++ characters
-
-        entity =
-            List.head <| List.filter (.id >> (==) id) interactables
-    in
-        case entity of
-            Just entity ->
-                entity
-
-            Nothing ->
-                Debug.crash <| "Couldn't find entity from id: " ++ id
-
-
-pluckRules : Engine.Rules
-pluckRules =
-    let
-        foldFn :
-            RuleData Engine.Rule
-            -> ( Int, Dict String Engine.Rule )
-            -> ( Int, Dict String Engine.Rule )
-        foldFn { interaction, conditions, changes } ( id, rules ) =
-            ( id + 1
-            , Dict.insert ((++) "rule" <| toString <| id + 1)
-                { interaction = interaction
-                , conditions = conditions
-                , changes = changes
-                }
-                rules
-            )
-    in
-        Tuple.second <| List.foldl foldFn ( 1, Dict.empty ) rulesData
-
-
-pluckContent : Dict String (Maybe (Zipper String))
-pluckContent =
-    let
-        foldFn :
-            RuleData Engine.Rule
-            -> ( Int, Dict String (Maybe (Zipper String)) )
-            -> ( Int, Dict String (Maybe (Zipper String)) )
-        foldFn { narrative } ( id, narratives ) =
-            ( id + 1
-            , Dict.insert ((++) "rule" <| toString <| id + 1)
-                (Zipper.fromList narrative)
-                narratives
-            )
-    in
-        Tuple.second <| List.foldl foldFn ( 1, Dict.empty ) rulesData
 
 
 init : ( Model, Cmd ClientTypes.Msg )
 init =
     let
-        startingState =
-            [ moveTo "Cottage"
-            , loadScene "start"
-            , addLocation "Cottage"
-            , addLocation "River"
-            , addLocation "Woods"
-            , addLocation "Grandma's house"
-            , moveItemToLocation "Cape" "Cottage"
-            , moveItemToLocation "Basket of food" "Cottage"
-            , moveCharacterToLocation "Little Red Riding Hood" "Cottage"
-            , moveCharacterToLocation "Mother" "Cottage"
-            , moveCharacterToLocation "Wolf" "Woods"
-            , moveCharacterToLocation "Grandma" "Grandma's house"
-            ]
+        engineModel =
+            Engine.init
+                { items = List.map Tuple.first Manifest.items
+                , locations = List.map Tuple.first Manifest.locations
+                , characters = List.map Tuple.first Manifest.characters
+                }
+                (Dict.map (curry getRuleData) Rules.rules)
+                |> Engine.changeWorld Rules.startingState
     in
-        ( { engineModel =
-                Engine.init
-                    { items = getIds items
-                    , locations = getIds locations
-                    , characters = getIds characters
-                    }
-                    pluckRules
-                    |> Engine.changeWorld startingState
+        ( { engineModel = engineModel
           , loaded = False
-          , storyLine =
-                [ { interactableName = "Mother"
-                  , interactableCssSelector = ""
-                  , narrative = """
-Once upon a time there was a young girl named Little Red Riding Hood, because she was so fond of her red cape that her grandma gave to her.
-
-One day, her mother said to her, "Little Red Riding Hood, take this basket of food to your Grandma, who lives in the woods, because she is not feeling well.  And remember, don't talk to strangers on the way!"
-"""
-                  }
-                ]
-          , content = pluckContent
+          , storyLine = [ Narrative.startingNarrative ]
+          , narrativeContent = Dict.map (curry getNarrative) Rules.rules
+          , endingCountDown = 0
           }
         , Cmd.none
         )
+
+
+findEntity : String -> Entity
+findEntity id =
+    (Manifest.items ++ Manifest.locations ++ Manifest.characters)
+        |> List.filter (Tuple.first >> (==) id)
+        |> List.head
+        |> Maybe.withDefault (entity id)
 
 
 update :
@@ -137,6 +64,7 @@ update :
     -> ( Model, Cmd ClientTypes.Msg )
 update msg model =
     if Engine.getEnding model.engineModel /= Nothing then
+        -- no-op if story has ended
         ( model, Cmd.none )
     else
         case msg of
@@ -145,23 +73,49 @@ update msg model =
                     ( newEngineModel, maybeMatchedRuleId ) =
                         Engine.update interactableId model.engineModel
 
-                    narrative =
-                        { interactableName = findEntity interactableId |> getDisplay |> .name
-                        , interactableCssSelector = findEntity interactableId |> getStyle
+                    {- If the engine found a matching rule, look up the narrative content component for that rule if possible.  The description from the display info component for the entity that was interacted with is used as a default. -}
+                    narrativeForThisInteraction =
+                        { interactableName = findEntity interactableId |> getDisplayInfo |> .name
+                        , interactableCssSelector = findEntity interactableId |> getClassName
                         , narrative =
-                            getNarrative model.content maybeMatchedRuleId
-                                |> Maybe.withDefault (findEntity interactableId |> getDisplay |> .description)
+                            maybeMatchedRuleId
+                                |> Maybe.andThen (\id -> Dict.get id model.narrativeContent)
+                                |> Maybe.map Zipper.current
+                                |> Maybe.withDefault (findEntity interactableId |> getDisplayInfo |> .description)
                         }
+
+                    {- If a rule matched, attempt to move to the next associated narrative content for next time. -}
+                    updateNarrativeContent : Maybe (Zipper String) -> Maybe (Zipper String)
+                    updateNarrativeContent =
+                        Maybe.map (\narrative -> Zipper.next narrative |> Maybe.withDefault narrative)
 
                     updatedContent =
                         maybeMatchedRuleId
-                            |> Maybe.map (\id -> Dict.update id updateContent model.content)
-                            |> Maybe.withDefault model.content
+                            |> Maybe.map (\id -> Dict.update id updateNarrativeContent model.narrativeContent)
+                            |> Maybe.withDefault model.narrativeContent
+
+                    {- This part about the `endingCountDown` and `checkEnd` is a hack to make the player interact with the wolf three times before ending the story, which currently is not possible in the rules matching system.  It also demonstrates how to mix state from the client's model to effect the story.
+                       I have plans in the next release of the engine to include a "quality-based system" that would allow you to do logic like this as part of the normal rules.
+                    -}
+                    updatedEndingCountDown =
+                        case maybeMatchedRuleId of
+                            Just "Little Red Ridding Hood's demise" ->
+                                model.endingCountDown + 1
+
+                            _ ->
+                                model.endingCountDown
+
+                    checkEnd =
+                        if updatedEndingCountDown == 3 then
+                            Engine.changeWorld [ endStory "The End" ]
+                        else
+                            identity
                 in
                     ( { model
-                        | engineModel = newEngineModel
-                        , storyLine = narrative :: model.storyLine
-                        , content = updatedContent
+                        | engineModel = newEngineModel |> checkEnd
+                        , storyLine = narrativeForThisInteraction :: model.storyLine
+                        , narrativeContent = updatedContent
+                        , endingCountDown = updatedEndingCountDown
                       }
                     , Cmd.none
                     )
@@ -172,40 +126,13 @@ update msg model =
                 )
 
 
-port loaded : (Bool -> msg) -> Sub msg
-
-
-subscriptions : Model -> Sub ClientTypes.Msg
-subscriptions model =
-    loaded <| always Loaded
-
-
-getNarrative : Dict String (Maybe (Zipper String)) -> Maybe String -> Maybe String
-getNarrative content ruleId =
-    ruleId
-        |> Maybe.andThen (\id -> Dict.get id content)
-        |> Maybe.andThen identity
-        |> Maybe.map Zipper.current
-
-
-updateContent : Maybe (Maybe (Zipper String)) -> Maybe (Maybe (Zipper String))
-updateContent =
-    let
-        nextOrStay narration =
-            Zipper.next narration
-                |> Maybe.withDefault narration
-    in
-        (Maybe.map >> Maybe.map) nextOrStay
-
-
 view :
     Model
     -> Html ClientTypes.Msg
 view model =
     let
         currentLocation =
-            Engine.getCurrentLocation model.engineModel
-                |> findEntity
+            Engine.getCurrentLocation model.engineModel |> findEntity
 
         displayState =
             { currentLocation = currentLocation
@@ -230,4 +157,25 @@ view model =
                 model.storyLine
             }
     in
-        Theme.Layout.view displayState
+        if not model.loaded then
+            div [ class "Loading" ] [ text "Loading..." ]
+        else
+            Theme.Layout.view displayState
+
+
+port loaded : (Bool -> msg) -> Sub msg
+
+
+subscriptions : Model -> Sub ClientTypes.Msg
+subscriptions model =
+    loaded <| always Loaded
+
+
+main : Program Never Model ClientTypes.Msg
+main =
+    Html.program
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        }
