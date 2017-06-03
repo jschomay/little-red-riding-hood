@@ -16,7 +16,7 @@ rulesData =
     , changes =
         []
     , narrative =
-        [ """Mother: "Little Red Ridding Hood!  Please come here here, I have something to tell you."
+        [ """Mother: "Little Red Riding Hood!  Please come here here, I have something to tell you."
 """
         ]
     }
@@ -81,7 +81,7 @@ rulesData =
            , changes =
                 [ moveItemToInventory "Basket of food" ]
            , narrative =
-                [ """Little Red Ridding Hood enjoyed visiting her Grandma, and looked forward to seeing her again.
+                [ """Little Red Riding Hood enjoyed visiting her Grandma, and looked forward to seeing her again.
 """
                 ]
            }
@@ -93,10 +93,10 @@ rulesData =
                 ]
            , changes =
                 [ moveTo "Woods"
-                , moveCharacterToLocation "Little Red Ridding Hood" "Woods"
+                , moveCharacterToLocation "Little Red Riding Hood" "Woods"
                 ]
            , narrative =
-                [ """It was a beautiful day and Little Red Ridding Hood skipped through the grassy meadow on her way to Grandma's house.
+                [ """It was a beautiful day and Little Red Riding Hood skipped through the grassy meadow on her way to Grandma's house.
 """
                 ]
            }
@@ -118,7 +118,7 @@ rulesData =
            , changes =
                 []
            , narrative =
-                [ """The old bridge separated the cottage from the woods.  Usually, Little Red Ridding Hood's mother forbade her from going across it.
+                [ """The old bridge separated the cottage from the woods.  Usually, Little Red Riding Hood's mother forbade her from going across it.
 """
                 ]
            }
@@ -129,7 +129,7 @@ rulesData =
            , changes =
                 []
            , narrative =
-                [ """The forest was dark and Little Red Ridding Hood felt a little afraid, but continued on bravely.
+                [ """The forest was dark and Little Red Riding Hood felt a little afraid, but continued on bravely.
 """
                 ]
            }
@@ -152,7 +152,7 @@ Wolf: "Hello little girl.  Won't you come here and tell me where you are going?"
            , changes =
                 []
            , narrative =
-                [ """Little Red Ridding Hood: "I'm visiting my Grandma who lives in these woods."
+                [ """Little Red Riding Hood: "I'm visiting my Grandma who lives in these woods."
 Wolf: "I see...  How touching.  Better not keep Granny waiting."
 """
                 ]
@@ -170,7 +170,7 @@ Wolf: "I see...  How touching.  Better not keep Granny waiting."
                 , moveCharacterOffScreen "Grandma"
                 ]
            , narrative =
-                [ """Only then did Little Red Ridding Hood remember her mother's warning about not talking to strangers.  That couldn't have done any harm, could it?
+                [ """Only then did Little Red Riding Hood remember her mother's warning about not talking to strangers.  That couldn't have done any harm, could it?
 """
                 ]
            }
@@ -191,11 +191,11 @@ Wolf: "I see...  How touching.  Better not keep Granny waiting."
                 [ characterIsInLocation "Wolf" "Grandma's house" ]
            , changes =
                 [ moveTo "Grandma's house"
-                , moveCharacterToLocation "Little Red Ridding Hood" "Grandma's house"
+                , moveCharacterToLocation "Little Red Riding Hood" "Grandma's house"
                 ]
            , narrative =
                 [ """Something seemed different about Grandma.
-Little Red Ridding Hood: "Grandma, what big eyes you have."
+Little Red Riding Hood: "Grandma, what big eyes you have."
 Wolf: "The better to see you with."
 """
                 ]
@@ -207,7 +207,7 @@ Wolf: "The better to see you with."
            , changes =
                 [ moveItemOffScreen "Ears" ]
            , narrative =
-                [ """Little Red Ridding Hood: "And Grandma, what big ears you have."
+                [ """Little Red Riding Hood: "And Grandma, what big ears you have."
 Wolf: "The better to hear you with my dear."
 """
                 ]
@@ -221,7 +221,7 @@ Wolf: "The better to hear you with my dear."
                 , endStory "Sad"
                 ]
            , narrative =
-                [ """Little Red Ridding Hood: "And Grandma, what big teeth you have!"
+                [ """Little Red Riding Hood: "And Grandma, what big teeth you have!"
 Wolf: "The better to gobble you up with!"
 And that is exactly what he did.
 """
@@ -243,11 +243,11 @@ And that is exactly what he did.
                 [ characterIsInLocation "Grandma" "Grandma's house" ]
            , changes =
                 [ moveTo "Grandma's house"
-                , moveCharacterToLocation "Little Red Ridding Hood" "Grandma's house"
+                , moveCharacterToLocation "Little Red Riding Hood" "Grandma's house"
                 , endStory "happy"
                 ]
            , narrative =
-                [ """Little Red Ridding Hood arrived safely at Grandma's house.  Grandma was happy to see her, and they ate all the food.
+                [ """Little Red Riding Hood arrived safely at Grandma's house.  Grandma was happy to see her, and they ate all the food.
 """
                 ]
            }

@@ -99,7 +99,7 @@ update msg model =
                     -}
                     updatedEndingCountDown =
                         case maybeMatchedRuleId of
-                            Just "Little Red Ridding Hood's demise" ->
+                            Just "Little Red Riding Hood's demise" ->
                                 model.endingCountDown + 1
 
                             _ ->

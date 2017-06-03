@@ -137,7 +137,7 @@ The wolf muttered "That's very interesting.  I hope she feels better soon."
 
 Then he smiled a crafty smile and dashed off into the woods.
 
-Little Red Ridding Hood thought that seemed a little unusual.
+Little Red Riding Hood thought that seemed a little unusual.
 """
     ]
 
@@ -152,7 +152,7 @@ talkToMother =
 
 excitedToVisitGrandma : List String
 excitedToVisitGrandma =
-    [ "Little Red Ridding Hood always enjoyed visiting her Grandma, and was excited to see her again." ]
+    [ "Little Red Riding Hood always enjoyed visiting her Grandma, and was excited to see her again." ]
 
 
 dallying : List String
@@ -162,12 +162,12 @@ dallying =
 
 takeBasket : List String
 takeBasket =
-    [ "Little Red Ridding Hood took the nice basket that her mother had prepared.  It was full of delicious food and cakes and even a little wine." ]
+    [ "Little Red Riding Hood took the nice basket that her mother had prepared.  It was full of delicious food and cakes and even a little wine." ]
 
 
 takeCape : List String
 takeCape =
-    [ "Little Red Ridding Hood eagerly put on her red cape." ]
+    [ "Little Red Riding Hood eagerly put on her red cape." ]
 
 
 crossingTheRiver : List String
@@ -194,22 +194,22 @@ surprisedByWolf =
 
 realizingMistake : List String
 realizingMistake =
-    [ "Only then did Little Red Ridding Hood remember her mother's warning about not talking to strangers.  That couldn't have done any harm, could it?" ]
+    [ "Only then did Little Red Riding Hood remember her mother's warning about not talking to strangers.  That couldn't have done any harm, could it?" ]
 
 
 happyToSeeGrandma : List String
 happyToSeeGrandma =
-    [ "Little Red Ridding Hood was happy to see her Grandma again." ]
+    [ "Little Red Riding Hood was happy to see her Grandma again." ]
 
 
 confusedByWolf : List String
 confusedByWolf =
-    [ "Little Red Ridding Hood knew that something was different about Grandma, but she shouldn't quite put her finger on it." ]
+    [ "Little Red Riding Hood knew that something was different about Grandma, but she shouldn't quite put her finger on it." ]
 
 
 forgettingBasket : List String
 forgettingBasket =
-    [ "Little Red Ridding Hood was so focused on her Grandma that she forgot all about the basket of food." ]
+    [ "Little Red Riding Hood was so focused on her Grandma that she forgot all about the basket of food." ]
 
 
 shivering : List String
@@ -220,7 +220,7 @@ shivering =
 sharingFoodWithGrandma : List String
 sharingFoodWithGrandma =
     [ """
-Little Red Ridding Hood hefted the basket of food onto her grandma's bed.  "Grandma, look at all of this nice food I brought you!"
+Little Red Riding Hood hefted the basket of food onto her grandma's bed.  "Grandma, look at all of this nice food I brought you!"
 
 "Oh, you are such a good little girl!  Thank you."
 

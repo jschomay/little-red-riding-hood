@@ -125,7 +125,7 @@ update msg model =
             Load ->
                 let
                     introText =
-                        """Once upon a time, there was a young girl named Little Red Ridding Hood, who lived in a cottage with her mother.  """
+                        """Once upon a time, there was a young girl named Little Red Riding Hood, who lived in a cottage with her mother.  """
                 in
                     ( model
                     , exportStoryWorld introText model.engineModel

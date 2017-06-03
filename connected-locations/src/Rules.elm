@@ -147,7 +147,7 @@ rules =
                         ]
                     }
                     Narrative.talkToWolf
-               , rule "Little Red Ridding Hood's demise"
+               , rule "Little Red Riding Hood's demise"
                     { interaction = with "wolf"
                     , conditions =
                         [ currentLocationIs "grandmasHouse"
@@ -183,7 +183,7 @@ rules =
                     }
                     Narrative.sharingFoodWithGrandma
                ]
-            ++ -- Little Red Ridding Hood
+            ++ -- Little Red Riding Hood
                [ rule "excited to visit grandma"
                     { interaction = with "lrrh"
                     , conditions =
